@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import '../App.css';
+import React, { Component } from 'react'
+import '../App.css'
 import { Route, Switch } from 'react-router-dom'
 import Category from './Category'
 import Posts from './Posts'
