@@ -11,8 +11,11 @@ class App extends Component {
 			<div>
 				<Switch>
 					<Route exact path="/" component={Category} />
-					<Route path="/:categoryId/:postId" component={PostDetails} />
-					<Route path="/:categoryId" component={Posts} />
+					<Route
+						path="/:categoryName/:postId"
+						render={(props) => <PostDetails {...props} />}
+					/>
+					<Route path="/:categoryName" component={Posts} />
 				</Switch>
 			</div>
 		);
