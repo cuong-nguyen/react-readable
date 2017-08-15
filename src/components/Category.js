@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class Category extends Component {
 	render() {
@@ -8,4 +9,4 @@ class Category extends Component {
 	}
 }
 
-export default Category
+export default connect()(Category)
