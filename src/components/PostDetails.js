@@ -1,7 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { getPosts } from '../actions/post'
+import { getComments } from '../actions/comment'
 
 class PostDetails extends Component {
+
+	componentDidMount() {
+		const { post, match, getPosts, getComments } = this.props
+		if (!post) {
+			getPosts()
+		}
+
+		getComments(match.params.postId)
+	}
+
 	render() {
 		const { post } = this.props
 
@@ -9,23 +21,39 @@ class PostDetails extends Component {
 			<div>
 				<h2>Post Details</h2>
 				{post && (
-					<ul>
-						<li>{post.title}</li>
-						<li>{post.body}</li>
-						<li>{post.author}</li>
-						<li>{post.voteScore}</li>
-					</ul>
+					<div>
+						<ul>
+							<li>{post.title}</li>
+							<li>{post.body}</li>
+							<li>{post.author}</li>
+							<li>{post.voteScore}</li>
+						</ul>
+
+						<h2>Comments</h2>
+						<ul>
+							{post.comments &&
+								post.comments.map(comment => <li key={comment.id}>{comment.body}</li>)
+							}
+						</ul>
+					</div>
 				)}
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = (state, ownProps) => {
-	const post = ownProps.location.state.post
+const mapStateToProps = ({ posts }, ownProps) => {
+	const { postId } = ownProps.match.params
+
 	return {
-		post
+		post: posts.find(p => p.id === postId)
 	}
 }
 
-export default connect(mapStateToProps)(PostDetails)
+export default connect(
+	mapStateToProps,
+	(dispatch) => ({
+		getPosts: () => dispatch(getPosts()),
+		getComments: (postId) => dispatch(getComments(postId))
+	})
+)(PostDetails)

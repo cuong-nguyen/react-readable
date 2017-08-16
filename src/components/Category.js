@@ -5,10 +5,8 @@ import { getCategories, getPosts } from '../actions'
 
 class Category extends Component {
 	componentDidMount() {
-		const { getCategories, getPosts } = this.props
-
-		getCategories()
-		getPosts()
+		this.props.getCategories()
+		this.props.getPosts()
 	}
 
 	render() {
@@ -27,15 +25,15 @@ class Category extends Component {
 				<br />
 				<h2>Posts</h2>
 				<ul>
-					{posts.map(p => (
-						<li key={p.id}>
+					{posts.map(post => (
+						<li key={post.id}>
 							<Link
 								to={{
-									pathname: `${p.category}/${p.id}`,
-									state: { post: p }
+									pathname: `${post.category}/${post.id}`,
+									state: { post }
 								}}
 							>
-								{p.title}
+								{post.title}
 							</Link>
 						</li>
 					))}

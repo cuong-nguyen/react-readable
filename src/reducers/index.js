@@ -4,5 +4,5 @@ import posts from './post'
 
 export default combineReducers({
 	categories,
-	posts
+	posts,
 })
