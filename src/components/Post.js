@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { toDateString } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 import CardFooter from './CardFooter'
-import { votePost } from '../actions'
+import { votePost, deletePost } from '../actions'
 import { connect } from 'react-redux'
 
 class Post extends Component {
 
 	render() {
-		const { post, votePost, postId } = this.props
+		const { post, votePost, deletePost, postId } = this.props
 		const { title, author, timestamp, voteScore, category, comments } = post
 
 		return (
@@ -59,7 +59,7 @@ class Post extends Component {
 					<CardFooter icon="fa-thumbs-up" onClick={() => votePost(postId, "upVote")} />
 					<CardFooter icon="fa-thumbs-down" onClick={() => votePost(postId, "downVote")} />
 					<CardFooter icon="fa-pencil" />
-					<CardFooter icon="fa-trash" />
+					<CardFooter icon="fa-trash" onClick={() => deletePost(postId)} />
 				</footer>
 			</div >
 		)
@@ -73,6 +73,7 @@ export default connect(
 		}
 	}),
 	(dispatch) => ({
-		votePost: (postId, option) => dispatch(votePost(postId, option))
+		votePost: (postId, option) => dispatch(votePost(postId, option)),
+		deletePost: (postId) => dispatch(deletePost(postId)),
 	})
 )(Post)

@@ -31,7 +31,25 @@ const votePost = (postId, option) => {
 	}
 }
 
+const deletePost = (postId) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders()
+		const init = {
+			method: 'DELETE',
+			headers
+		}
+
+		fetch(`${hostOrigin}/posts/${postId}`, init)
+			.then(response => response)
+			.then(() => {
+				dispatch({ type: actionTypes.DELETE_POST, deletedPostId: postId })
+			})
+			.catch(err => console.log(err))
+	}
+}
+
 export {
 	getPosts,
-	votePost
+	votePost,
+	deletePost
 }
