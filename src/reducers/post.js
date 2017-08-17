@@ -1,14 +1,23 @@
-import { GET_POSTS, GET_COMMENTS } from '../actions/actionTypes'
+import * as actionTypes from '../actions/actionTypes'
 
 const posts = (state = [], action) => {
 	switch (action.type) {
-		case GET_POSTS:
+		case actionTypes.GET_POSTS:
 			return action.posts.filter(p => !p.deleted)
 
-		case GET_COMMENTS:
+		case actionTypes.GET_COMMENTS:
 			return state.map(post => {
 				if (post.id === action.postId) {
 					return Object.assign({}, post, { comments: action.comments })
+				}
+
+				return post
+			})
+
+		case actionTypes.VOTE_POST:
+			return state.map(post => {
+				if (post.id === action.post.id) {
+					post.voteScore = action.post.voteScore
 				}
 
 				return post

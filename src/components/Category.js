@@ -31,7 +31,7 @@ class Category extends Component {
 				<div className="columns is-multiline">
 					{posts.map(post => (
 						<div className="column is-one-third" key={post.id}>
-							<Post post={post} />
+							<Post postId={post.id} />
 						</div>
 					))}
 				</div>

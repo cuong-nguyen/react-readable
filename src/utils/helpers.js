@@ -8,7 +8,8 @@ const createRequestHeaders = (config) => {
 	headers.set('authorization', token)
 
 	if (config) {
-		return Object.assign({}, headers, config)
+		Object.keys(config)
+			.map(key => headers.set(key, config[key]))
 	}
 
 	return headers

@@ -1,28 +1,21 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import Post from './Post'
 import { connect } from 'react-redux'
 
 class Posts extends Component {
 	render() {
-		const { posts } = this.props
+		const { posts, categoryName } = this.props
 
 		return (
 			<div>
-				<h2>Post</h2>
-				<ul>
-					{posts.map(p => (
-						<li key={p.id}>
-							<Link
-								to={{
-									pathname: `${p.category}/${p.id}`,
-									state: { post: p }
-								}}
-							>
-								{p.title}
-							</Link>
-						</li>
+				<h1 className="title">#{categoryName}</h1>
+				<div className="columns is-multiline">
+					{posts.map(post => (
+						<div className="column is-one-third" key={post.id}>
+							<Post postId={post.id} />
+						</div>
 					))}
-				</ul>
+				</div>
 			</div>
 		)
 	}
@@ -30,8 +23,11 @@ class Posts extends Component {
 
 export default connect(
 	(state, ownProps) => {
+		const categoryName = ownProps.match.params.categoryName
+
 		return {
-			posts: state.posts.filter(p => p.category === ownProps.match.params.categoryName)
+			posts: state.posts.filter(p => p.category === categoryName),
+			categoryName,
 		}
 	}
 )(Posts)
