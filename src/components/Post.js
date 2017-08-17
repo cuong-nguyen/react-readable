@@ -1,6 +1,7 @@
 import React from 'react'
 import { toDateString } from '../utils/helpers'
 import { Link } from 'react-router-dom'
+import CardFooter from './CardFooter'
 
 const Post = ({ post }) => {
 	const { title, author, timestamp, voteScore, category, id, comments } = post
@@ -50,15 +51,10 @@ const Post = ({ post }) => {
 			</Link>
 
 			<footer className="card-footer">
-				<a className="card-footer-item">
-					<span className="icon"><i className="fa fa-thumbs-up"></i></span>
-				</a>
-				<a className="card-footer-item">
-					<span className="icon"><i className="fa fa-thumbs-down"></i></span>
-				</a>
-				<a className="card-footer-item">
-					<span className="icon"><i className="fa fa-pencil"></i></span>
-				</a>
+				<CardFooter icon="fa-thumbs-up" />
+				<CardFooter icon="fa-thumbs-down" />
+				<CardFooter icon="fa-pencil" />
+				<CardFooter icon="fa-trash" />
 			</footer>
 		</div >
 	)
