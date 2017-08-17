@@ -1164,6 +1164,10 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://repo-csd.everymatrix.com/repository/npm-all/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
+bulma@^0.5.1:
+  version "0.5.1"
+  resolved "https://repo-csd.everymatrix.com/repository/npm-all/bulma/-/bulma-0.5.1.tgz#db2831c94afe732250c7b12527a7b792a4dc9ef8"
+
 bytes@2.5.0:
   version "2.5.0"
   resolved "https://repo-csd.everymatrix.com/repository/npm-all/bytes/-/bytes-2.5.0.tgz#4c9423ea2d252c270c41b2bdefeff9bb6b62c06a"
@@ -2541,6 +2545,10 @@ flat-cache@^1.2.1:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://repo-csd.everymatrix.com/repository/npm-all/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
+
+font-awesome@^4.7.0:
+  version "4.7.0"
+  resolved "https://repo-csd.everymatrix.com/repository/npm-all/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
 for-in@^1.0.1:
   version "1.0.2"
