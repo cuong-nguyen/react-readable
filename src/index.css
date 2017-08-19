@@ -5,7 +5,7 @@ body {
 }
 
 .container {
-	padding-top: 20px;
+	padding: 20px;
 }
 
 .image img {
@@ -23,4 +23,12 @@ a.post {
 a.category {
 	display: inline-block;
 	margin: 0 5px;
+}
+
+.new-comment {
+	border-top: 1px solid rgba(219, 219, 219, 0.5);
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 2rem;
 }
