@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toDateString } from '../utils/helpers'
-import { getPosts, getComments } from '../actions'
+import { fetchPosts, fetchPostComments } from '../actions'
 import { Comment } from '../components'
+import { getPost, getPostComments } from '../reducers'
 
 class PostDetails extends Component {
 
 	componentDidMount() {
-		const { post, match, getPosts, getComments } = this.props
+		const { post, match, fetchPosts, fetchPostComments } = this.props
 		if (!post) {
-			getPosts()
+			fetchPosts()
 		}
 
-		getComments(match.params.postId)
+		fetchPostComments(match.params.postId)
 	}
 
 	render() {
-		const { post } = this.props
+		const { post, comments } = this.props
 
 		return (
 			<div>
@@ -51,11 +52,11 @@ class PostDetails extends Component {
 					</div>
 				)}
 
-				{post && post.comments && (
+				{comments && (
 					<div>
-						<h3><strong>Comments ({post.comments.length})</strong></h3>
+						<h3><strong>Comments ({comments.length})</strong></h3>
 						<br />
-						{post.comments.map(comment => <Comment {...comment} />)}
+						{comments.map(comment => <Comment {...comment} />)}
 					</div>
 				)}
 
@@ -92,11 +93,12 @@ class PostDetails extends Component {
 }
 
 export default connect(
-	({ posts }, { match }) => ({
-		post: posts.find(p => p.id === match.params.postId)
+	(state, { match }) => ({
+		post: getPost(state, match.params.postId),
+		comments: getPostComments(state, match.params.postId),
 	}),
 	{
-		getPosts,
-		getComments,
+		fetchPosts,
+		fetchPostComments,
 	}
 )(PostDetails)

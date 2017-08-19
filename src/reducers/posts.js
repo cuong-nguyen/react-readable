@@ -6,15 +6,6 @@ const posts = (state = [], action) => {
 		case actionTypes.GET_POSTS:
 			return action.posts.filter(p => !p.deleted)
 
-		case actionTypes.GET_COMMENTS:
-			return state.map(post => {
-				if (post.id === action.postId) {
-					return Object.assign({}, post, { comments: action.comments })
-				}
-
-				return post
-			})
-
 		case actionTypes.VOTE_POST:
 			return state.map(post => {
 				if (post.id === action.post.id) {
@@ -54,3 +45,5 @@ export const getSortedPosts = (state, { sortBy, sortDir }) => {
 }
 
 export const getPostsByCategory = (state, categoryName) => state.filter(p => p.category === categoryName)
+
+export const getPost = (state, id) => state.find(p => p.id === id)

@@ -16,9 +16,9 @@ const SortBy = ({ text, onClick, sortIcon, field }) => {
 }
 
 export default connect(
-	({ filter }, { field }) => ({
-		sortIcon: filter.sortBy === field
-			? filter.sortDir === SORT_ASC ? 'fa-sort-desc' : 'fa-sort-asc'
+	({ postFilter }, { field }) => ({
+		sortIcon: postFilter.sortBy === field
+			? postFilter.sortDir === SORT_ASC ? 'fa-long-arrow-up' : 'fa-long-arrow-down'
 			: 'fa-sort'
 	})
 )(SortBy)

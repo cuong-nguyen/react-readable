@@ -1,7 +1,7 @@
 import { createRequestHeaders, hostOrigin } from '../utils/helpers'
 import * as actionTypes from './actionTypes'
 
-export const getComments = (postId) => {
+export const fetchPostComments = (postId) => {
 	return (dispatch) => {
 		const headers = createRequestHeaders()
 

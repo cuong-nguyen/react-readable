@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Post, Filter, SortBy } from '../components'
-import { getCategories, getPosts, sortPost } from '../actions'
+import { getCategories, fetchPosts, sortPost } from '../actions'
 import { getSortedPosts } from '../reducers'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 
 class Category extends Component {
 	componentDidMount() {
 		this.props.getCategories()
-		this.props.getPosts()
+		this.props.fetchPosts()
 	}
 
 	render() {
@@ -60,12 +60,12 @@ class Category extends Component {
 export default connect(
 	(state) => ({
 		categories: state.categories,
-		posts: getSortedPosts(state, state.filter),
-		filter: state.filter,
+		posts: getSortedPosts(state),
+		postFilter: state.postFilter,
 	}),
 	{
 		getCategories,
-		getPosts,
+		fetchPosts,
 		sortPost,
 	}
 )(Category)

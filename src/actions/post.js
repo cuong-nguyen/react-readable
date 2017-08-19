@@ -1,7 +1,7 @@
 import { createRequestHeaders, hostOrigin } from '../utils/helpers'
 import * as actionTypes from './actionTypes'
 
-const getPosts = () => {
+const fetchPosts = () => {
 	return (dispatch) => {
 		const headers = createRequestHeaders()
 
@@ -53,7 +53,7 @@ const sortPost = (sortBy) => {
 }
 
 export {
-	getPosts,
+	fetchPosts,
 	votePost,
 	deletePost,
 	sortPost,

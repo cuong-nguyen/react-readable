@@ -1,7 +1,7 @@
 import { SORT_POST } from '../actions/actionTypes'
 import * as constants from '../constants'
 
-const filter = (state = {}, action) => {
+const postFilter = (state = {}, action) => {
 	switch (action.type) {
 		case SORT_POST:
 			return {
@@ -18,4 +18,4 @@ const filter = (state = {}, action) => {
 	}
 }
 
-export default filter
+export default postFilter
