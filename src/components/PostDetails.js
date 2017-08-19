@@ -42,18 +42,12 @@ class PostDetails extends Component {
 	}
 }
 
-const mapStateToProps = ({ posts }, ownProps) => {
-	const { postId } = ownProps.match.params
-
-	return {
-		post: posts.find(p => p.id === postId)
-	}
-}
-
 export default connect(
-	mapStateToProps,
-	(dispatch) => ({
-		getPosts: () => dispatch(getPosts()),
-		getComments: (postId) => dispatch(getComments(postId))
-	})
+	({ posts }, { match }) => ({
+		post: posts.find(p => p.id === match.params.postId)
+	}),
+	{
+		getPosts,
+		getComments,
+	}
 )(PostDetails)

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCategories, getPosts } from '../actions'
-import Post from './Post'
+import { Post, Filter, SortBy } from '../components'
+import { getCategories, getPosts, sortPost } from '../actions'
+import { getSortedPosts } from '../reducers'
+import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 
 class Category extends Component {
 	componentDidMount() {
@@ -11,7 +13,7 @@ class Category extends Component {
 	}
 
 	render() {
-		const { categories, posts } = this.props
+		const { categories, posts, sortPost } = this.props
 
 		return (
 			<div>
@@ -28,6 +30,21 @@ class Category extends Component {
 					</div>
 				</nav>
 
+				{posts.length > 1 && (
+					<Filter>
+						<SortBy
+							text="Votes"
+							onClick={() => sortPost(SORT_BY_VOTES)}
+							field={SORT_BY_VOTES}
+						/>
+						<SortBy
+							text="Date"
+							onClick={() => sortPost(SORT_BY_DATE)}
+							field={SORT_BY_DATE}
+						/>
+					</Filter>
+				)}
+
 				<div className="columns is-multiline">
 					{posts.map(post => (
 						<div className="column is-one-third" key={post.id}>
@@ -43,10 +60,12 @@ class Category extends Component {
 export default connect(
 	(state) => ({
 		categories: state.categories,
-		posts: state.posts
+		posts: getSortedPosts(state, state.filter),
+		filter: state.filter,
 	}),
-	(dispatch) => ({
-		getCategories: () => dispatch(getCategories()),
-		getPosts: () => dispatch(getPosts())
-	})
+	{
+		getCategories,
+		getPosts,
+		sortPost,
+	}
 )(Category)

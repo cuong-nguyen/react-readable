@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes'
+import { SORT_ASC, SORT_BY_DATE, SORT_BY_VOTES } from '../constants'
 
 const posts = (state = [], action) => {
 	switch (action.type) {
@@ -32,3 +33,24 @@ const posts = (state = [], action) => {
 }
 
 export default posts
+
+export const getSortedPosts = (state, { sortBy, sortDir }) => {
+	switch (sortBy) {
+		case SORT_BY_VOTES:
+			return state.sort((a, b) =>
+				sortDir === SORT_ASC
+					? a.voteScore - b.voteScore
+					: b.voteScore - a.voteScore)
+
+		case SORT_BY_DATE:
+			return state.sort((a, b) =>
+				sortDir === SORT_ASC
+					? a.timestamp - b.timestamp
+					: b.timestamp - a.timestamp)
+
+		default:
+			return state
+	}
+}
+
+export const getPostsByCategory = (state, categoryName) => state.filter(p => p.category === categoryName)

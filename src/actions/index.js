@@ -1,4 +1,4 @@
 export * from './actionTypes'
-export { getCategories } from './category'
-export { getPosts, votePost, deletePost } from './post'
-export { getComments } from './comment'
+export * from './category'
+export * from './post'
+export * from './comment'

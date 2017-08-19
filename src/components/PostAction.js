@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CardFooter = ({ icon, onClick }) => {
+const PostAction = ({ icon, onClick }) => {
 	return (
 		<a className="card-footer-item" onClick={onClick}>
 			<span className="icon"><i className={`fa ${icon}`}></i></span>
@@ -8,4 +8,4 @@ const CardFooter = ({ icon, onClick }) => {
 	)
 }
 
-export default CardFooter
+export default PostAction

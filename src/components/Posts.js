@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Post from './Post'
 import { connect } from 'react-redux'
+import { getPostsByCategory } from '../reducers'
 
 class Posts extends Component {
 	render() {
@@ -22,11 +23,11 @@ class Posts extends Component {
 }
 
 export default connect(
-	(state, ownProps) => {
-		const categoryName = ownProps.match.params.categoryName
+	(state, { match }) => {
+		const categoryName = match.params.categoryName
 
 		return {
-			posts: state.posts.filter(p => p.category === categoryName),
+			posts: getPostsByCategory(state, categoryName),
 			categoryName,
 		}
 	}

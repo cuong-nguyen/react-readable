@@ -48,8 +48,13 @@ const deletePost = (postId) => {
 	}
 }
 
+const sortPost = (sortBy) => {
+	return { type: actionTypes.SORT_POST, sortBy }
+}
+
 export {
 	getPosts,
 	votePost,
-	deletePost
+	deletePost,
+	sortPost,
 }

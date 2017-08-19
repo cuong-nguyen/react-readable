@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { toDateString } from '../utils/helpers'
 import { Link } from 'react-router-dom'
-import CardFooter from './CardFooter'
+import { PostAction } from '../components'
 import { votePost, deletePost } from '../actions'
 import { connect } from 'react-redux'
 
@@ -56,10 +56,10 @@ class Post extends Component {
 				</Link>
 
 				<footer className="card-footer">
-					<CardFooter icon="fa-thumbs-up" onClick={() => votePost(postId, "upVote")} />
-					<CardFooter icon="fa-thumbs-down" onClick={() => votePost(postId, "downVote")} />
-					<CardFooter icon="fa-pencil" />
-					<CardFooter icon="fa-trash" onClick={() => deletePost(postId)} />
+					<PostAction icon="fa-thumbs-up" onClick={() => votePost(postId, "upVote")} />
+					<PostAction icon="fa-thumbs-down" onClick={() => votePost(postId, "downVote")} />
+					<PostAction icon="fa-pencil" />
+					<PostAction icon="fa-trash" onClick={() => deletePost(postId)} />
 				</footer>
 			</div >
 		)

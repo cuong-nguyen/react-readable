@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Category from './Category'
-import Posts from './Posts'
-import PostDetails from './PostDetails'
+import { Category, Posts, PostDetails } from '../components'
 
 class App extends Component {
 	render() {
