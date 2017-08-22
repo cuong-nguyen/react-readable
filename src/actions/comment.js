@@ -1,7 +1,7 @@
 import { createRequestHeaders, hostOrigin } from '../utils/helpers'
 import * as actionTypes from './actionTypes'
 
-export const fetchPostComments = (postId) => {
+const fetchPostComments = (postId) => {
 	return (dispatch) => {
 		const headers = createRequestHeaders()
 
@@ -11,4 +11,44 @@ export const fetchPostComments = (postId) => {
 				dispatch({ type: actionTypes.GET_COMMENTS, postId, comments })
 			})
 	}
+}
+
+const addComment = (comment) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders({ 'Content-Type': 'application/json' })
+		const init = {
+			method: 'POST',
+			headers,
+			body: JSON.stringify(comment)
+		}
+
+		fetch(`${hostOrigin}/comments`, init)
+			.then(response => response.json())
+			.then(comment => {
+				dispatch({ type: actionTypes.ADD_COMMENT, comment })
+			})
+	}
+}
+
+const voteComment = (commentId, option) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders({ 'Content-Type': 'application/json' })
+		const init = {
+			method: 'POST',
+			headers,
+			body: JSON.stringify({ option })
+		}
+
+		fetch(`${hostOrigin}/comments/${commentId}`, init)
+			.then(response => response.json())
+			.then(comment => {
+				dispatch({ type: actionTypes.VOTE_COMMENT, comment })
+			})
+	}
+}
+
+export {
+	fetchPostComments,
+	addComment,
+	voteComment,
 }

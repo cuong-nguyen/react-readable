@@ -1,15 +1,24 @@
 import React, { Component } from 'react'
 import { toDateString } from '../utils/helpers'
 import { Link } from 'react-router-dom'
-import { PostAction } from '../components'
-import { votePost, deletePost } from '../actions'
+import { Action } from '../components'
+import { votePost, deletePost, fetchPostComments } from '../actions'
+import { getPost, getPostComments } from '../reducers'
 import { connect } from 'react-redux'
 
 class Post extends Component {
 
+	componentDidMount() {
+		const { comments, post, fetchPostComments } = this.props
+
+		if (comments === undefined) {
+			fetchPostComments(post.id)
+		}
+	}
+
 	render() {
-		const { post, votePost, deletePost, postId } = this.props
-		const { title, author, timestamp, voteScore, category, comments } = post
+		const { post, votePost, deletePost, postId, comments } = this.props
+		const { title, author, timestamp, voteScore, category } = post
 
 		return (
 			<div className="card">
@@ -56,10 +65,22 @@ class Post extends Component {
 				</Link>
 
 				<footer className="card-footer">
-					<PostAction icon="fa-thumbs-up" onClick={() => votePost(postId, "upVote")} />
-					<PostAction icon="fa-thumbs-down" onClick={() => votePost(postId, "downVote")} />
-					<PostAction icon="fa-pencil" />
-					<PostAction icon="fa-trash" onClick={() => deletePost(postId)} />
+					<Action
+						icon="fa-thumbs-up"
+						actionClass="card-footer-item"
+						onClick={() => votePost(postId, "upVote")}
+					/>
+					<Action
+						icon="fa-thumbs-down"
+						actionClass="card-footer-item"
+						onClick={() => votePost(postId, "downVote")}
+					/>
+					<Action actionClass="card-footer-item" icon="fa-pencil" />
+					<Action
+						icon="fa-trash"
+						actionClass="card-footer-item"
+						onClick={() => deletePost(postId)}
+					/>
 				</footer>
 			</div >
 		)
@@ -67,13 +88,18 @@ class Post extends Component {
 }
 
 export default connect(
-	(state, ownProps) => ({
-		post: {
-			...state.posts.find(p => p.id === ownProps.postId)
+	(state, ownProps) => {
+		const post = getPost(state, ownProps.postId)
+
+		return {
+			post,
+			comments: getPostComments(state, ownProps.postId),
+			totalVotes: post.voteScore
 		}
-	}),
-	(dispatch) => ({
-		votePost: (postId, option) => dispatch(votePost(postId, option)),
-		deletePost: (postId) => dispatch(deletePost(postId)),
-	})
+	},
+	{
+		votePost,
+		deletePost,
+		fetchPostComments,
+	}
 )(Post)

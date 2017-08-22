@@ -13,6 +13,18 @@ const fetchPosts = () => {
 	}
 }
 
+const fetchPost = (postId) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders()
+
+		fetch(`${hostOrigin}/posts/${postId}`, { headers })
+			.then(response => response.json())
+			.then(post => {
+				dispatch({ type: actionTypes.GET_POST, post })
+			})
+	}
+}
+
 const votePost = (postId, option) => {
 	return (dispatch) => {
 		const headers = createRequestHeaders({ "Content-Type": "application/json" })
@@ -54,6 +66,7 @@ const sortPost = (sortBy) => {
 
 export {
 	fetchPosts,
+	fetchPost,
 	votePost,
 	deletePost,
 	sortPost,

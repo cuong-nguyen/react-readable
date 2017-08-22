@@ -1,23 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toDateString } from '../utils/helpers'
-import { fetchPosts, fetchPostComments } from '../actions'
-import { Comment } from '../components'
+import { fetchPost, fetchPostComments, votePost, addComment } from '../actions'
+import { Comment, Voting } from '../components'
 import { getPost, getPostComments } from '../reducers'
+import { v4 } from 'node-uuid'
 
 class PostDetails extends Component {
-
 	componentDidMount() {
-		const { post, match, fetchPosts, fetchPostComments } = this.props
-		if (!post) {
-			fetchPosts()
-		}
+		const { post, match, comments, fetchPost, fetchPostComments } = this.props
+		post === undefined && fetchPost(match.params.postId)
+		comments === undefined && fetchPostComments(match.params.postId)
+	}
 
-		fetchPostComments(match.params.postId)
+	addComment = () => {
+		const author = this.authorInput.value
+		const body = this.bodyInput.value
+
+		if (author && body) {
+			const { addComment, post } = this.props
+
+			addComment({
+				id: v4(),
+				author,
+				body,
+				parentId: post.id,
+				timestamp: new Date().getTime()
+			})
+		}
 	}
 
 	render() {
-		const { post, comments } = this.props
+		const { post, comments, votePost } = this.props
 
 		return (
 			<div>
@@ -34,18 +48,11 @@ class PostDetails extends Component {
 									</p>
 								</div>
 								<nav className="level is-mobile">
-									<div className="level-left">
-										<a className="level-item">
-											<span className="icon"><i className="fa fa-thumbs-up"></i></span>
-										</a>
-										<a className="level-item">
-											<span className="icon"><i className="fa fa-thumbs-down"></i></span>
-										</a>
-										<a className="level-item">
-											<span className="icon"><i className="fa fa-heart"></i></span>
-											{post.voteScore}
-										</a>
-									</div>
+									<Voting
+										voteScore={post.voteScore}
+										upVote={() => votePost(post.id, "upVote")}
+										downVote={() => votePost(post.id, "downVote")}
+									/>
 								</nav>
 							</div>
 						</article>
@@ -56,7 +63,7 @@ class PostDetails extends Component {
 					<div>
 						<h3><strong>Comments ({comments.length})</strong></h3>
 						<br />
-						{comments.map(comment => <Comment {...comment} />)}
+						{comments.map(comment => <Comment key={comment.id} {...comment} />)}
 					</div>
 				)}
 
@@ -72,17 +79,28 @@ class PostDetails extends Component {
 						</div>
 						<div className="field">
 							<p className="control">
-								<input className="input" placeholder="Your name..."></input>
+								<input
+									ref={input => { this.authorInput = input }}
+									className="input"
+									placeholder="Your name..."></input>
 							</p>
 						</div>
 						<div className="field">
 							<p className="control">
-								<textarea className="textarea" placeholder="Add a comment..."></textarea>
+								<textarea
+									ref={input => { this.bodyInput = input }}
+									className="textarea"
+									placeholder="Add a comment..."></textarea>
 							</p>
 						</div>
 						<div className="field">
 							<p className="control">
-								<button className="button is-primary">Submit</button>
+								<button
+									className="button is-primary"
+									onClick={this.addComment}
+								>
+									Submit
+								</button>
 							</p>
 						</div>
 					</div>
@@ -93,12 +111,19 @@ class PostDetails extends Component {
 }
 
 export default connect(
-	(state, { match }) => ({
-		post: getPost(state, match.params.postId),
-		comments: getPostComments(state, match.params.postId),
-	}),
+	(state, { match }) => {
+		const post = getPost(state, match.params.postId)
+
+		return {
+			post,
+			totalVotes: post ? post.voteScore : null,
+			comments: getPostComments(state, match.params.postId),
+		}
+	},
 	{
-		fetchPosts,
+		fetchPost,
 		fetchPostComments,
+		votePost,
+		addComment,
 	}
 )(PostDetails)

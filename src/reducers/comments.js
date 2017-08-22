@@ -5,6 +5,30 @@ const comments = (state = {}, action) => {
 		case actionTypes.GET_COMMENTS:
 			return Object.assign({}, state, { [action.postId]: action.comments })
 
+		case actionTypes.ADD_COMMENT:
+			const postId = action.comment.parentId
+
+			return {
+				...state,
+				[postId]: [
+					...state[postId],
+					action.comment,
+				]
+			}
+
+		case actionTypes.VOTE_COMMENT:
+			const id = action.comment.parentId
+
+			return {
+				...state,
+				[id]: state[id].map(comment => {
+					if (comment.id === action.comment.id) {
+						comment.voteScore = action.comment.voteScore
+					}
+					return comment
+				})
+			}
+
 		default:
 			return state
 	}
@@ -12,4 +36,6 @@ const comments = (state = {}, action) => {
 
 export default comments
 
-export const getPostComments = (state, id) => state[id]
+export const getPostComments = (state, postId) => state[postId]
+
+export const getComment = (state, id, postId) => state[postId].find(comment => comment.id === id)

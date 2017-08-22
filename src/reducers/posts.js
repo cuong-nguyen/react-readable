@@ -6,6 +6,12 @@ const posts = (state = [], action) => {
 		case actionTypes.GET_POSTS:
 			return action.posts.filter(p => !p.deleted)
 
+		case actionTypes.GET_POST:
+			return [
+				...state.filter(p => p.id !== action.post.id),
+				action.post
+			]
+
 		case actionTypes.VOTE_POST:
 			return state.map(post => {
 				if (post.id === action.post.id) {

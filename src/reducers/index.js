@@ -17,4 +17,6 @@ export const getPostsByCategory = (state, categoryName) => postSelectors.getPost
 
 export const getPost = (state, id) => postSelectors.getPost(state.posts, id)
 
-export const getPostComments = (state, id) => commentSelectors.getPostComments(state.comments, id)
+export const getPostComments = (state, postId) => commentSelectors.getPostComments(state.comments, postId)
+
+export const getComment = (state, id, postId) => commentSelectors.getComment(state.comments, id, postId)

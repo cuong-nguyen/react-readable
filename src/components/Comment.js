@@ -1,26 +1,45 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Voting } from '../components'
+import { toDateString } from '../utils/helpers'
+import { voteComment } from '../actions'
+import { getComment } from '../reducers'
 
-const Comment = ({ author, body, voteScore, timestamp, id }) => {
-	return (
-		<article className="media" key={id}>
-			<figure className="media-left">
-				<p className="image is-48x48">
-					<img src="http://bulma.io/images/placeholders/48x48.png" alt="" />
-				</p>
-			</figure>
-			<div className="media-content">
-				<div className="content">
-					<p>
-						<strong>{author}</strong>
-						<br />
-						{body}
-						<br />
-						<small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+class Comment extends Component {
+
+	render() {
+		const { id, comment, voteComment } = this.props
+
+		return (
+			<article className="media">
+				<figure className="media-left">
+					<p className="image is-48x48">
+						<img src="http://bulma.io/images/placeholders/48x48.png" alt="" />
 					</p>
+				</figure>
+				<div className="media-content">
+					<div className="content">
+						<div>
+							<strong>{comment.author}</strong>
+							<small> @ {toDateString(comment.timestamp)}</small>
+							<div>{comment.body}</div>
+							<br />
+							<Voting
+								voteScore={comment.voteScore}
+								upVote={() => { voteComment(id, 'upVote') }}
+								downVote={() => { voteComment(id, 'downVote') }}
+							/>
+						</div>
+					</div>
 				</div>
-			</div>
-		</article>
-	)
+			</article>
+		)
+	}
 }
 
-export default Comment
+export default connect(
+	(state, { parentId: postId, id }) => ({
+		comment: getComment(state, id, postId)
+	}),
+	{ voteComment }
+)(Comment)
