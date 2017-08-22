@@ -13,7 +13,10 @@ export default combineReducers({
 
 export const getSortedPosts = (state) => postSelectors.getSortedPosts(state.posts, state.postFilter)
 
-export const getPostsByCategory = (state, categoryName) => postSelectors.getPostsByCategory(state.posts, categoryName)
+export const getPostsByCategory = (state, categoryName) => {
+	const posts = postSelectors.getPostsByCategory(state.posts, categoryName)
+	return postSelectors.getSortedPosts(posts, state.postFilter)
+}
 
 export const getPost = (state, id) => postSelectors.getPost(state.posts, id)
 

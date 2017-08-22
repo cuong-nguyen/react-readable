@@ -61,7 +61,9 @@ class PostDetails extends Component {
 
 				{comments && (
 					<div>
-						<h3><strong>Comments ({comments.length})</strong></h3>
+						<h3>
+							<strong>{comments.length ? `Comments (${comments.length})` : 'No comments! Be the first to comment below'}</strong>
+						</h3>
 						<br />
 						{comments.map(comment => <Comment key={comment.id} {...comment} />)}
 					</div>
