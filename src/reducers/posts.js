@@ -24,6 +24,9 @@ const posts = (state = [], action) => {
 		case actionTypes.DELETE_POST:
 			return state.filter(p => p.id !== action.deletedPostId)
 
+		case actionTypes.ADD_POST:
+			return [...state, action.post]
+
 		default:
 			return state
 	}

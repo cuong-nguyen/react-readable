@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Post, Filter, SortBy } from '../components'
+import { Post, Filter, SortBy, NewPost } from '../components'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 import { connect } from 'react-redux'
 import { getPostsByCategory } from '../reducers'
@@ -34,6 +34,10 @@ class Posts extends Component {
 							<Post postId={post.id} />
 						</div>
 					))}
+				</div>
+
+				<div className="new-post">
+					<a>Add a post</a>
 				</div>
 			</div>
 		)

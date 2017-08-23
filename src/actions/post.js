@@ -64,10 +64,29 @@ const sortPost = (sortBy) => {
 	return { type: actionTypes.SORT_POST, sortBy }
 }
 
+const addPost = (post) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders({ "Content-Type": "application/json" })
+
+		const init = {
+			method: 'POST',
+			headers,
+			body: JSON.stringify({ ...post })
+		}
+
+		fetch(`${hostOrigin}/posts`, init)
+			.then(response => response.json())
+			.then(post => {
+				dispatch({ type: actionTypes.ADD_POST, post })
+			})
+	}
+}
+
 export {
 	fetchPosts,
 	fetchPost,
 	votePost,
 	deletePost,
 	sortPost,
+	addPost,
 }

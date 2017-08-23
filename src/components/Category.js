@@ -1,12 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Post, Filter, SortBy } from '../components'
-import { getCategories, fetchPosts, sortPost } from '../actions'
+import { Post, Filter, SortBy, NewPost } from '../components'
+import { getCategories, fetchPosts, sortPost, addPost } from '../actions'
 import { getSortedPosts } from '../reducers'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
+import Modal from 'react-modal'
+import { v4 } from 'node-uuid'
 
 class Category extends Component {
+	state = {
+		newPostModalOpen: false
+	}
+
+	openNewPostModal = () => this.setState({ newPostModalOpen: true })
+	closeNewPostModal = () => this.setState({ newPostModalOpen: false })
+
+	addPost = ({ author, title, body, category }) => {
+		const { addPost } = this.props
+
+		addPost({
+			id: v4(),
+			author,
+			title,
+			body,
+			category,
+			timestamp: new Date().getTime(),
+		})
+		this.setState({ newPostModalOpen: false })
+	}
+
 	componentDidMount() {
 		this.props.getCategories()
 		this.props.fetchPosts()
@@ -14,6 +37,7 @@ class Category extends Component {
 
 	render() {
 		const { categories, posts, sortPost } = this.props
+		const { newPostModalOpen } = this.state
 
 		return (
 			<div>
@@ -52,6 +76,20 @@ class Category extends Component {
 						</div>
 					))}
 				</div>
+
+				<div className="new-post">
+					<a onClick={this.openNewPostModal}>Add a post</a>
+				</div>
+
+				<Modal
+					isOpen={newPostModalOpen}
+					contentLabel='Modal'
+					className='custom-modal'
+					overlayClassName='custom-overlay'
+					onRequestClose={this.closeNewPostModal}
+				>
+					{newPostModalOpen && <NewPost onSubmit={this.addPost} categories={categories} />}
+				</Modal>
 			</div>
 		)
 	}
@@ -67,5 +105,6 @@ export default connect(
 		getCategories,
 		fetchPosts,
 		sortPost,
+		addPost,
 	}
 )(Category)
