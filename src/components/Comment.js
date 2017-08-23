@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Voting } from '../components'
 import { toDateString } from '../utils/helpers'
-import { voteComment } from '../actions'
+import { voteComment, deleteComment } from '../actions'
 import { getComment } from '../reducers'
 
 class Comment extends Component {
 
 	render() {
-		const { id, comment, voteComment } = this.props
+		const { id, comment, voteComment, deleteComment } = this.props
 
 		return (
 			<article className="media">
@@ -26,8 +26,9 @@ class Comment extends Component {
 							<br />
 							<Voting
 								voteScore={comment.voteScore}
-								upVote={() => { voteComment(id, 'upVote') }}
-								downVote={() => { voteComment(id, 'downVote') }}
+								upVote={() => voteComment(id, 'upVote')}
+								downVote={() => voteComment(id, 'downVote')}
+								onDelete={() => deleteComment(id)}
 							/>
 						</div>
 					</div>
@@ -41,5 +42,8 @@ export default connect(
 	(state, { parentId: postId, id }) => ({
 		comment: getComment(state, id, postId)
 	}),
-	{ voteComment }
+	{
+		voteComment,
+		deleteComment,
+	}
 )(Comment)

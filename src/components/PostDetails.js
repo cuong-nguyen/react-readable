@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toDateString } from '../utils/helpers'
-import { fetchPost, fetchPostComments, votePost, addComment } from '../actions'
+import { fetchPost, fetchPostComments, votePost, addComment, deletePost } from '../actions'
 import { Comment, Voting } from '../components'
 import { getPost, getPostComments } from '../reducers'
 import { v4 } from 'node-uuid'
@@ -27,7 +27,16 @@ class PostDetails extends Component {
 				parentId: post.id,
 				timestamp: new Date().getTime()
 			})
+
+			this.authorInput.value = ''
+			this.bodyInput.value = ''
 		}
+	}
+
+	handleDeletePost = () => {
+		const { post, deletePost, history } = this.props
+		deletePost(post.id)
+		history.goBack()
 	}
 
 	render() {
@@ -52,6 +61,7 @@ class PostDetails extends Component {
 										voteScore={post.voteScore}
 										upVote={() => votePost(post.id, "upVote")}
 										downVote={() => votePost(post.id, "downVote")}
+										onDelete={this.handleDeletePost}
 									/>
 								</nav>
 							</div>
@@ -127,5 +137,6 @@ export default connect(
 		fetchPostComments,
 		votePost,
 		addComment,
+		deletePost,
 	}
 )(PostDetails)

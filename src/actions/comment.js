@@ -47,8 +47,25 @@ const voteComment = (commentId, option) => {
 	}
 }
 
+const deleteComment = (commentId) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders({ 'Content-Type': 'application/json' })
+		const init = {
+			method: 'DELETE',
+			headers
+		}
+
+		fetch(`${hostOrigin}/comments/${commentId}`, init)
+			.then(response => response.json())
+			.then(deletedComment => {
+				dispatch({ type: actionTypes.DELETE_COMMENT, deletedComment })
+			})
+	}
+}
+
 export {
 	fetchPostComments,
 	addComment,
 	voteComment,
+	deleteComment,
 }

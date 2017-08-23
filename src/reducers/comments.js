@@ -29,6 +29,14 @@ const comments = (state = {}, action) => {
 				})
 			}
 
+		case actionTypes.DELETE_COMMENT:
+			const { id: commentId, parentId: pId } = action.deletedComment
+
+			return {
+				...state,
+				[pId]: state[pId].filter(c => c.id !== commentId)
+			}
+
 		default:
 			return state
 	}
