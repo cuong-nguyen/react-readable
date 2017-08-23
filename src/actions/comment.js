@@ -27,6 +27,7 @@ const addComment = (comment) => {
 			.then(comment => {
 				dispatch({ type: actionTypes.ADD_COMMENT, comment })
 			})
+			.catch(err => console.log(err))
 	}
 }
 

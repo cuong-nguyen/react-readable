@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { toDateString } from '../utils/helpers'
 import { fetchPost, fetchPostComments, votePost, addComment, deletePost } from '../actions'
-import { Comment, Voting } from '../components'
+import { Comment, Voting, NewComment } from '../components'
 import { getPost, getPostComments } from '../reducers'
 import { v4 } from 'node-uuid'
 
@@ -13,24 +13,15 @@ class PostDetails extends Component {
 		comments === undefined && fetchPostComments(match.params.postId)
 	}
 
-	addComment = () => {
-		const author = this.authorInput.value
-		const body = this.bodyInput.value
+	onSubmitComment = (comment) => {
+		const { post, addComment } = this.props
 
-		if (author && body) {
-			const { addComment, post } = this.props
-
-			addComment({
-				id: v4(),
-				author,
-				body,
-				parentId: post.id,
-				timestamp: new Date().getTime()
-			})
-
-			this.authorInput.value = ''
-			this.bodyInput.value = ''
-		}
+		addComment({
+			id: v4(),
+			...comment,
+			parentId: post.id,
+			timestamp: new Date().getTime()
+		})
 	}
 
 	handleDeletePost = () => {
@@ -79,44 +70,7 @@ class PostDetails extends Component {
 					</div>
 				)}
 
-				<article className="media new-comment">
-					<figure className="media-left">
-						<p className="image is-48x48">
-							<img src="http://bulma.io/images/placeholders/48x48.png" alt="" />
-						</p>
-					</figure>
-					<div className="media-content">
-						<div className="field">
-							<span className="tag is-info">New comment</span>
-						</div>
-						<div className="field">
-							<p className="control">
-								<input
-									ref={input => { this.authorInput = input }}
-									className="input"
-									placeholder="Your name..."></input>
-							</p>
-						</div>
-						<div className="field">
-							<p className="control">
-								<textarea
-									ref={input => { this.bodyInput = input }}
-									className="textarea"
-									placeholder="Add a comment..."></textarea>
-							</p>
-						</div>
-						<div className="field">
-							<p className="control">
-								<button
-									className="button is-primary"
-									onClick={this.addComment}
-								>
-									Submit
-								</button>
-							</p>
-						</div>
-					</div>
-				</article>
+				<NewComment onSubmit={this.onSubmitComment} />
 			</div>
 		)
 	}

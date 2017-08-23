@@ -30,7 +30,7 @@ class Posts extends Component {
 	}
 
 	render() {
-		const { posts, categoryName, sortPost, addPost } = this.props
+		const { posts, categoryName, sortPost } = this.props
 		const { newPostModalOpen } = this.state
 
 		return (
