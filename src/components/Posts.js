@@ -3,11 +3,35 @@ import { Post, Filter, SortBy, NewPost } from '../components'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 import { connect } from 'react-redux'
 import { getPostsByCategory } from '../reducers'
-import { sortPost } from '../actions'
+import { sortPost, addPost } from '../actions'
+import Modal from 'react-modal'
+import { v4 } from 'node-uuid'
 
 class Posts extends Component {
+	state = {
+		newPostModalOpen: false
+	}
+
+	openNewPostModal = () => this.setState({ newPostModalOpen: true })
+	closeNewPostModal = () => this.setState({ newPostModalOpen: false })
+
+	addPost = ({ author, title, body, category }) => {
+		const { addPost } = this.props
+
+		addPost({
+			id: v4(),
+			author,
+			title,
+			body,
+			category,
+			timestamp: new Date().getTime(),
+		})
+		this.setState({ newPostModalOpen: false })
+	}
+
 	render() {
-		const { posts, categoryName, sortPost } = this.props
+		const { posts, categoryName, sortPost, addPost } = this.props
+		const { newPostModalOpen } = this.state
 
 		return (
 			<div>
@@ -37,8 +61,18 @@ class Posts extends Component {
 				</div>
 
 				<div className="new-post">
-					<a>Add a post</a>
+					<a onClick={this.openNewPostModal}>Add a post</a>
 				</div>
+
+				<Modal
+					isOpen={newPostModalOpen}
+					contentLabel='Modal'
+					className='custom-modal'
+					overlayClassName='custom-overlay'
+					onRequestClose={this.closeNewPostModal}
+				>
+					{newPostModalOpen && <NewPost onSubmit={this.addPost} categories={[categoryName]} />}
+				</Modal>
 			</div>
 		)
 	}
@@ -56,5 +90,6 @@ export default connect(
 	},
 	{
 		sortPost,
+		addPost
 	}
 )(Posts)

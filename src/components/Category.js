@@ -88,7 +88,7 @@ class Category extends Component {
 					overlayClassName='custom-overlay'
 					onRequestClose={this.closeNewPostModal}
 				>
-					{newPostModalOpen && <NewPost onSubmit={this.addPost} categories={categories} />}
+					{newPostModalOpen && <NewPost onSubmit={this.addPost} categories={categories.map(c => c.name)} />}
 				</Modal>
 			</div>
 		)

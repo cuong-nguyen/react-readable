@@ -4,7 +4,7 @@ class NewPost extends Component {
 	state = {
 		formInput: {
 			author: '',
-			category: this.props.categories ? this.props.categories[0].name : '',
+			category: this.props.categories ? this.props.categories[0] : '',
 			title: '',
 			body: ''
 		}
@@ -49,7 +49,7 @@ class NewPost extends Component {
 								value={category}
 								onChange={this.onChange}
 							>
-								{categories.map(cat => <option>{cat.name}</option>)}
+								{categories.map(cat => <option>{cat}</option>)}
 							</select>
 						</div>}
 				</div>
