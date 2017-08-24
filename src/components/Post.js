@@ -17,7 +17,7 @@ class Post extends Component {
 	}
 
 	render() {
-		const { post, votePost, deletePost, postId, comments } = this.props
+		const { post, votePost, deletePost, postId, comments, onEdit } = this.props
 		const { title, author, timestamp, voteScore, category } = post
 
 		return (
@@ -75,7 +75,11 @@ class Post extends Component {
 						actionClass="card-footer-item"
 						onClick={() => votePost(postId, "downVote")}
 					/>
-					<Action actionClass="card-footer-item" icon="fa-pencil" />
+					<Action
+						actionClass="card-footer-item"
+						icon="fa-pencil"
+						onClick={() => onEdit(post)}
+					/>
 					<Action
 						icon="fa-trash"
 						actionClass="card-footer-item"

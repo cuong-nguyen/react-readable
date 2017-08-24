@@ -8,10 +8,7 @@ class App extends Component {
 			<div className="container">
 				<Switch>
 					<Route exact path="/" component={Category} />
-					<Route
-						path="/:categoryName/:postId"
-						render={(props) => <PostDetails {...props} />}
-					/>
+					<Route path="/:categoryName/:postId" component={PostDetails} />
 					<Route path="/:categoryName" component={Posts} />
 				</Switch>
 			</div>

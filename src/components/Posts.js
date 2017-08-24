@@ -1,37 +1,41 @@
 import React, { Component } from 'react'
-import { Post, Filter, SortBy, NewPost } from '../components'
+import { Post, Filter, SortBy, ManagePost } from '../components'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 import { connect } from 'react-redux'
 import { getPostsByCategory } from '../reducers'
-import { sortPost, addPost } from '../actions'
+import { sortPost, addPost, editPost } from '../actions'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
 class Posts extends Component {
 	state = {
-		newPostModalOpen: false
+		postModalOpen: false
 	}
 
-	openNewPostModal = () => this.setState({ newPostModalOpen: true })
-	closeNewPostModal = () => this.setState({ newPostModalOpen: false })
+	openManagePostModal = (post) => {
+		this.editingPost = post
+		this.setState({ postModalOpen: true })
+	}
 
-	addPost = ({ author, title, body, category }) => {
-		const { addPost } = this.props
+	closeManagePostModal = () => this.setState({ postModalOpen: false })
 
-		addPost({
-			id: v4(),
-			author,
-			title,
-			body,
-			category,
-			timestamp: new Date().getTime(),
-		})
-		this.setState({ newPostModalOpen: false })
+	handleSubmitPost = (post) => {
+		const { addPost, editPost } = this.props
+		post.timestamp = new Date().getTime()
+
+		if (post.id) {
+			editPost(post)
+		} else {
+			post.id = v4()
+			addPost(post)
+		}
+
+		this.setState({ postModalOpen: false })
 	}
 
 	render() {
-		const { posts, categoryName, sortPost } = this.props
-		const { newPostModalOpen } = this.state
+		const { posts, categoryName, sortPost, categories } = this.props
+		const { postModalOpen } = this.state
 
 		return (
 			<div>
@@ -55,23 +59,28 @@ class Posts extends Component {
 				<div className="columns is-multiline">
 					{posts.map(post => (
 						<div className="column is-one-third" key={post.id}>
-							<Post postId={post.id} />
+							<Post postId={post.id} onEdit={this.openManagePostModal} />
 						</div>
 					))}
 				</div>
 
 				<div className="new-post">
-					<a onClick={this.openNewPostModal}>Add a post</a>
+					<a onClick={this.openManagePostModal}>Add a post</a>
 				</div>
 
 				<Modal
-					isOpen={newPostModalOpen}
+					isOpen={postModalOpen}
 					contentLabel='Modal'
-					className='custom-modal'
-					overlayClassName='custom-overlay'
-					onRequestClose={this.closeNewPostModal}
+					className='post-modal'
+					overlayClassName='post-overlay'
+					onRequestClose={this.closeManagePostModal}
 				>
-					{newPostModalOpen && <NewPost onSubmit={this.addPost} categories={[categoryName]} />}
+					{postModalOpen &&
+						<ManagePost
+							post={this.editingPost}
+							onSubmit={this.handleSubmitPost}
+							categories={categories.map(c => c.name)}
+						/>}
 				</Modal>
 			</div>
 		)
@@ -85,11 +94,13 @@ export default connect(
 		return {
 			posts: getPostsByCategory(state, categoryName),
 			categoryName,
+			categories: state.categories,
 			postFilter: state.postFilter,
 		}
 	},
 	{
 		sortPost,
-		addPost
+		addPost,
+		editPost,
 	}
 )(Posts)

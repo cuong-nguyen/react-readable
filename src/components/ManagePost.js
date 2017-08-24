@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
 
-class EditPost extends Component {
+class ManagePost extends Component {
 	state = {
 		formInput: {
 			author: '',
 			category: '',
 			title: '',
 			body: ''
+		}
+	}
+
+	componentDidMount() {
+		const { post } = this.props
+
+		if (post) {
+			this.setState({ formInput: Object.assign({}, post) })
 		}
 	}
 
@@ -49,7 +57,7 @@ class EditPost extends Component {
 								value={category}
 								onChange={this.onChange}
 							>
-								{categories.map(cat => <option>{cat}</option>)}
+								{categories.map(cat => <option key={cat}>{cat}</option>)}
 							</select>
 						</div>}
 				</div>
@@ -95,4 +103,4 @@ class EditPost extends Component {
 	}
 }
 
-export default EditPost
+export default ManagePost

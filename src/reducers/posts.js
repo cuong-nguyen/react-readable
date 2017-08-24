@@ -27,6 +27,14 @@ const posts = (state = [], action) => {
 		case actionTypes.ADD_POST:
 			return [...state, action.post]
 
+		case actionTypes.EDIT_POST:
+			return state.map(post => {
+				if (post.id === action.post.id) {
+					return action.post
+				}
+				return post
+			})
+
 		default:
 			return state
 	}

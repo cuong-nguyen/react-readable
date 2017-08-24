@@ -82,6 +82,24 @@ const addPost = (post) => {
 	}
 }
 
+const editPost = (post) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders({ "Content-Type": "application/json" })
+
+		const init = {
+			method: 'PUT',
+			headers,
+			body: JSON.stringify({ ...post })
+		}
+
+		fetch(`${hostOrigin}/posts/${post.id}`, init)
+			.then(response => response.json())
+			.then(post => {
+				dispatch({ type: actionTypes.EDIT_POST, post })
+			})
+	}
+}
+
 export {
 	fetchPosts,
 	fetchPost,
@@ -89,4 +107,5 @@ export {
 	deletePost,
 	sortPost,
 	addPost,
+	editPost,
 }

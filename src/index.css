@@ -52,7 +52,7 @@ a.category {
   font-size: 0;
 }
 
-.custom-overlay {
+.post-overlay {
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -61,7 +61,7 @@ a.category {
 	background-color: rgba(255, 255, 255, 0.75);
 }
 
-.custom-modal {
+.post-modal {
 	position: absolute;
 	top: 40px;
 	left: 200px;
