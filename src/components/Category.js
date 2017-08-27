@@ -79,7 +79,7 @@ class Category extends Component {
 				</div>
 
 				<div className="new-post">
-					<a onClick={this.openManagePostModal}>Add a post</a>
+					<a onClick={() => this.openManagePostModal(null)}>Add a post</a>
 				</div>
 
 				<Modal
@@ -89,11 +89,7 @@ class Category extends Component {
 					overlayClassName='post-overlay'
 					onRequestClose={this.closeManagePostModal}
 				>
-					<ManagePost
-						post={this.editingPost}
-						onSubmit={this.handleSubmitPost}
-						categories={categories.map(c => c.name)}
-					/>
+					<ManagePost post={this.editingPost} onSubmit={this.handleSubmitPost} />
 				</Modal>
 			</div>
 		)

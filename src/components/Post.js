@@ -10,10 +10,7 @@ class Post extends Component {
 
 	componentDidMount() {
 		const { comments, post, fetchPostComments } = this.props
-
-		if (comments === undefined) {
-			fetchPostComments(post.id)
-		}
+		comments === undefined && fetchPostComments(post.id)
 	}
 
 	render() {

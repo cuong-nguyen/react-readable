@@ -34,7 +34,7 @@ class Posts extends Component {
 	}
 
 	render() {
-		const { posts, categoryName, sortPost, categories } = this.props
+		const { posts, categoryName, sortPost } = this.props
 		const { postModalOpen } = this.state
 
 		return (
@@ -65,7 +65,7 @@ class Posts extends Component {
 				</div>
 
 				<div className="new-post">
-					<a onClick={this.openManagePostModal}>Add a post</a>
+					<a onClick={() => this.openManagePostModal(null)}>Add a post</a>
 				</div>
 
 				<Modal
@@ -75,12 +75,7 @@ class Posts extends Component {
 					overlayClassName='post-overlay'
 					onRequestClose={this.closeManagePostModal}
 				>
-					{postModalOpen &&
-						<ManagePost
-							post={this.editingPost}
-							onSubmit={this.handleSubmitPost}
-							categories={categories.map(c => c.name)}
-						/>}
+					<ManagePost post={this.editingPost} onSubmit={this.handleSubmitPost} />
 				</Modal>
 			</div>
 		)
@@ -94,8 +89,6 @@ export default connect(
 		return {
 			posts: getPostsByCategory(state, categoryName),
 			categoryName,
-			categories: state.categories,
-			postFilter: state.postFilter,
 		}
 	},
 	{

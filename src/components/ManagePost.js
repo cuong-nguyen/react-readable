@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 class ManagePost extends Component {
 	state = {
 		formInput: {
 			author: '',
-			category: '',
+			category: this.props.match.params.categoryName || this.props.categories[0].name,
 			title: '',
 			body: ''
 		}
@@ -12,10 +14,7 @@ class ManagePost extends Component {
 
 	componentDidMount() {
 		const { post } = this.props
-
-		if (post) {
-			this.setState({ formInput: Object.assign({}, post) })
-		}
+		post && this.setState({ formInput: Object.assign({}, post) })
 	}
 
 	onChange = (e) => {
@@ -30,7 +29,7 @@ class ManagePost extends Component {
 
 	render() {
 		const { author, title, body, category } = this.state.formInput
-		const { categories } = this.props
+		const { categories, post } = this.props
 
 		return (
 			<div>
@@ -38,6 +37,7 @@ class ManagePost extends Component {
 					<label className="label">Name</label>
 					<div className="control">
 						<input
+							autoFocus
 							className="input"
 							type="text"
 							placeholder="Enter your name"
@@ -57,7 +57,7 @@ class ManagePost extends Component {
 								value={category}
 								onChange={this.onChange}
 							>
-								{categories.map(cat => <option key={cat}>{cat}</option>)}
+								{categories.map(category => <option key={category.name}>{category.name}</option>)}
 							</select>
 						</div>}
 				</div>
@@ -93,9 +93,12 @@ class ManagePost extends Component {
 
 				<div className="field">
 					<p className="control">
-						<button className="button is-success" onClick={this.handleSubmit}>
-							Submit
-    				</button>
+						<a className="button is-primary" onClick={this.handleSubmit}>
+							<span className="icon">
+								<i className={`fa ${post ? 'fa-check' : 'fa-plus-circle'}`}></i>
+							</span>
+							<span>{post ? 'SAVE' : 'ADD'}</span>
+						</a>
 					</p>
 				</div>
 			</div>
@@ -103,4 +106,10 @@ class ManagePost extends Component {
 	}
 }
 
-export default ManagePost
+export default withRouter(
+	connect(
+		(state) => ({
+			categories: state.categories
+		})
+	)(ManagePost)
+)
