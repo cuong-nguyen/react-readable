@@ -79,76 +79,86 @@ class PostDetails extends Component {
 		return (
 			<div>
 				{post && (
-					<div className="box">
-						<article className="media">
-							<div className="media-content">
-								<div className="content">
-									<p>
-										<strong>{post.title}</strong>
-										<small> by {post.author} @ {toDateString(post.timestamp)}</small>
-										<br />
-										{post.body}
-									</p>
-								</div>
-								<nav className="level is-mobile">
-									<Voting
-										voteScore={post.voteScore}
-										upVote={() => votePost(post.id, "upVote")}
-										downVote={() => votePost(post.id, "downVote")}
-										onDelete={this.handleDeletePost}
-										onEdit={this.openManagePostModal}
-									/>
-								</nav>
-							</div>
-						</article>
-					</div>
-				)}
-
-				{comments && (
 					<div>
-						<h3>
-							<strong>{comments.length ? `Comments (${comments.length})` : 'Be the first to comment below'}</strong>
-						</h3>
+						<div className="box">
+							<article className="media">
+								<div className="media-content">
+									<div className="content">
+										<p>
+											<strong>{post.title}</strong>
+											<small> by {post.author} @ {toDateString(post.timestamp)}</small>
+											<br />
+											{post.body}
+										</p>
+									</div>
+									<nav className="level is-mobile">
+										<Voting
+											voteScore={post.voteScore}
+											upVote={() => votePost(post.id, "upVote")}
+											downVote={() => votePost(post.id, "downVote")}
+											onDelete={this.handleDeletePost}
+											onEdit={this.openManagePostModal}
+										/>
+									</nav>
+								</div>
+							</article>
+						</div>
+
+						{comments && (
+							<div>
+								{comments.length
+									? (<div className="tags has-addons">
+										<span className="tag is-primary is-medium">Comment(s)</span>
+										<span className="tag is-medium">{comments.length}</span>
+									</div>
+									) : <strong>Be the first to comment below</strong>
+								}
+								{comments.map(comment =>
+									<Comment
+										onEdit={this.openManageCommentModal}
+										key={comment.id}
+										{...comment}
+									/>)
+								}
+							</div>
+						)}
 						<br />
-						{comments.map(comment =>
-							<Comment
-								onEdit={this.openManageCommentModal}
-								key={comment.id}
-								{...comment}
-							/>)}
+
+						<a className="button is-primary new-comment" onClick={() => this.openManageCommentModal(null)}>
+							<span className="icon">
+								<i className="fa fa-comment"></i>
+							</span>
+							<span>Write your comment...</span>
+						</a>
+
+						<Modal
+							isOpen={commentModalOpen}
+							contentLabel='Modal'
+							className='comment-modal'
+							overlayClassName='post-overlay'
+							onRequestClose={this.closeModal}
+						>
+							<ManageComment
+								postId={post.id}
+								comment={this.editingComment}
+								onSubmit={this.handleSubmitComment} />
+						</Modal>
+
+						<Modal
+							isOpen={postModalOpen}
+							contentLabel='Modal'
+							className='post-modal'
+							overlayClassName='post-overlay'
+							onRequestClose={this.closeModal}
+						>
+							<ManagePost
+								post={this.editingPost}
+								onSubmit={this.handleSubmitPost}
+								categories={categories.map(c => c.name)}
+							/>
+						</Modal>
 					</div>
 				)}
-
-				<a className="new-comment" onClick={() => this.openManageCommentModal(null)}>Write your comment ...</a>
-
-				{post &&
-					<Modal
-						isOpen={commentModalOpen}
-						contentLabel='Modal'
-						className='comment-modal'
-						overlayClassName='post-overlay'
-						onRequestClose={this.closeModal}
-					>
-						<ManageComment
-							postId={post.id}
-							comment={this.editingComment}
-							onSubmit={this.handleSubmitComment} />
-					</Modal>
-				}
-
-				<Modal
-					isOpen={postModalOpen}
-					contentLabel='Modal'
-					className='post-modal'
-					overlayClassName='post-overlay'
-					onRequestClose={this.closeModal}
-				>
-					<ManagePost
-						post={this.editingPost}
-						onSubmit={this.handleSubmitPost}
-						categories={categories.map(c => c.name)}
-					/>
-				</Modal>
 			</div>
 		)
 	}

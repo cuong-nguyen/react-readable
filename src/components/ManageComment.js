@@ -72,7 +72,7 @@ class ManageComment extends Component {
 					</div>
 					<div className="field">
 						<p className="control">
-							<a className="button is-success" onClick={this.handleSubmit} disabled={!author || !body}>
+							<a className="button is-primary" onClick={this.handleSubmit} disabled={!author || !body}>
 								<span className="icon">
 									<i className={`fa ${comment ? 'fa-check' : 'fa-plus-circle'}`}></i>
 								</span>
