@@ -48,6 +48,16 @@ a.category {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   font-size: 0;
 }
+.home {
+	position: fixed;
+	top: 15px;
+	left: 15px;
+}
+.home a.button {
+	border-radius: 50%;
+	background: #00d1b2;
+	color: #FFF;
+}
 
 .post-overlay {
 	position: fixed;

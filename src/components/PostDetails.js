@@ -12,6 +12,7 @@ import {
 	editComment
 } from '../actions'
 import { Comment, Voting, ManageComment, ManagePost } from '../components'
+import { Link } from 'react-router-dom'
 import { getPost, getPostComments } from '../reducers'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
@@ -130,6 +131,14 @@ class PostDetails extends Component {
 							</span>
 							<span>Write your comment...</span>
 						</a>
+
+						<div className="home">
+							<Link to="/" className="button is-large">
+								<span className="icon is-large">
+									<i className="fa fa-home"></i>
+								</span>
+							</Link>
+						</div>
 
 						<Modal
 							isOpen={commentModalOpen}
