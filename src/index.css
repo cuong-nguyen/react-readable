@@ -9,7 +9,7 @@ body {
 }
 
 .image img {
-	border-radius: 5%;
+	border-radius: 50%;
 }
 
 .icon .fa-heart {
@@ -26,9 +26,7 @@ a.category {
 }
 
 .manage-comment {
-	margin-top: 1rem;
 	margin-bottom: 2rem;
-	padding-top: 1rem;
 	padding-bottom: 2rem;
 }
 
@@ -75,4 +73,60 @@ a.category {
 	border-radius: 3px;
 	box-shadow: 0 3px 8px 0 rgba(0,0,0,.24), 0 3px 12px 0 rgba(0,0,0,.12);
 	min-width: 500px;
+}
+
+.comment-modal {
+	position: absolute;
+	top: 150px;
+	left: 300px;
+	right: 300px;
+	bottom: 150px;
+	border: 1px solid rgb(204, 204, 204);
+	background: rgb(255, 255, 255);
+	overflow: auto;
+	border-radius: 4px;
+	outline: none;
+	padding: 20px;
+	border-radius: 3px;
+	box-shadow: 0 3px 8px 0 rgba(0,0,0,.24), 0 3px 12px 0 rgba(0,0,0,.12);
+	min-width: 500px;
+}
+
+.comment {
+	padding: 0.5rem 1rem;
+	border-left: 3px solid #00d1b2;
+	border-radius: 5px;
+	margin-bottom: 1.5rem;
+	background-color: white;
+	-webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+	box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+	color: #4a4a4a;
+	max-width: 100%;
+	position: relative;
+	margin-left: 1.5rem;
+}
+
+.comment .body {
+	margin: 0.25rem 0 1rem;
+}
+
+.actions {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.actions .voting,
+.actions .manage {
+	display: flex;
+	justify-content: center
+}
+
+.level-item {
+	margin-right: 0.5rem;
+}
+
+.new-comment {
+	display: inline-block;
+	margin-left: 1.5rem;
 }

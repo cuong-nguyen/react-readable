@@ -11,30 +11,30 @@ class Comment extends Component {
 		const { id, comment, voteComment, deleteComment, onEdit } = this.props
 
 		return (
-			<article className="media">
-				<figure className="media-left">
-					<p className="image is-48x48">
-						<img src="http://bulma.io/images/placeholders/48x48.png" alt="" />
-					</p>
-				</figure>
-				<div className="media-content">
-					<div className="content">
-						<div>
-							<strong>{comment.author}</strong>
-							<small> @ {toDateString(comment.timestamp)}</small>
-							<div>{comment.body}</div>
-							<br />
-							<Voting
-								voteScore={comment.voteScore}
-								upVote={() => voteComment(id, 'upVote')}
-								downVote={() => voteComment(id, 'downVote')}
-								onDelete={() => deleteComment(id)}
-								onEdit={() => onEdit(comment)}
-							/>
-						</div>
+			<div className="comment">
+				<div className="media">
+					<div className="media-left">
+						<figure className="image is-32x32">
+							<img src="http://bulma.io/images/placeholders/32x32.png" alt="profile" />
+						</figure>
+					</div>
+					<div className="media-content">
+						<p className="title is-6">{comment.author}</p>
+						<p className="subtitle is-7"> @ {toDateString(comment.timestamp)}</p>
 					</div>
 				</div>
-			</article>
+
+				<div className="body">
+					{comment.body}
+				</div>
+				<Voting
+					voteScore={comment.voteScore}
+					upVote={() => voteComment(id, 'upVote')}
+					downVote={() => voteComment(id, 'downVote')}
+					onDelete={() => deleteComment(id)}
+					onEdit={() => onEdit(comment)}
+				/>
+			</div>
 		)
 	}
 }

@@ -46,7 +46,6 @@ class PostDetails extends Component {
 
 		if (comment.id) {
 			editComment(comment)
-			this.closeModal()
 		} else {
 			addComment({
 				id: v4(),
@@ -55,6 +54,8 @@ class PostDetails extends Component {
 				timestamp: new Date().getTime()
 			})
 		}
+
+		this.closeModal()
 	}
 
 	handleSubmitPost = (post) => {
@@ -84,7 +85,7 @@ class PostDetails extends Component {
 								<div className="content">
 									<p>
 										<strong>{post.title}</strong>
-										<small><i> by {post.author}</i> @ {toDateString(post.timestamp)}</small>
+										<small> by {post.author} @ {toDateString(post.timestamp)}</small>
 										<br />
 										{post.body}
 									</p>
@@ -106,7 +107,7 @@ class PostDetails extends Component {
 				{comments && (
 					<div>
 						<h3>
-							<strong>{comments.length ? `Comments (${comments.length})` : 'No comments! Be the first to comment below'}</strong>
+							<strong>{comments.length ? `Comments (${comments.length})` : 'Be the first to comment below'}</strong>
 						</h3>
 						<br />
 						{comments.map(comment =>
@@ -118,20 +119,22 @@ class PostDetails extends Component {
 					</div>
 				)}
 
-				{post && <ManageComment postId={post.id} onSubmit={this.handleSubmitComment} />}
+				<a className="new-comment" onClick={() => this.openManageCommentModal(null)}>Write your comment ...</a>
 
-				<Modal
-					isOpen={commentModalOpen}
-					contentLabel='Modal'
-					className='post-modal'
-					overlayClassName='post-overlay'
-					onRequestClose={this.closeModal}
-				>
-					{post && <ManageComment
-						postId={post.id}
-						comment={this.editingComment}
-						onSubmit={this.handleSubmitComment} />}
-				</Modal>
+				{post &&
+					<Modal
+						isOpen={commentModalOpen}
+						contentLabel='Modal'
+						className='comment-modal'
+						overlayClassName='post-overlay'
+						onRequestClose={this.closeModal}
+					>
+						<ManageComment
+							postId={post.id}
+							comment={this.editingComment}
+							onSubmit={this.handleSubmitComment} />
+					</Modal>
+				}
 
 				<Modal
 					isOpen={postModalOpen}

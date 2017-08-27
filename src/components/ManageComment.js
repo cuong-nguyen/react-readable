@@ -36,18 +36,28 @@ class ManageComment extends Component {
 
 	render() {
 		const { author, body } = this.state
+		const { comment } = this.props
 
 		return (
 			<article className="media manage-comment">
 				<div className="media-content">
 					<div className="field">
+						<strong>
+							<span className="icon">
+								<i className="fa fa-comment"> </i>
+							</span>
+							{comment ? ' Edit Comment' : ' New Comment'}
+						</strong>
+					</div>
+					<div className="field">
 						<p className="control">
 							<input
+								autoFocus
 								name="author"
 								value={this.state.author}
 								onChange={this.onChange}
 								className="input"
-								placeholder="Your name..."></input>
+								placeholder="Enter your name..."></input>
 						</p>
 					</div>
 					<div className="field">
@@ -62,13 +72,12 @@ class ManageComment extends Component {
 					</div>
 					<div className="field">
 						<p className="control">
-							<button
-								className="button is-primary"
-								onClick={this.handleSubmit}
-								disabled={!author || !body}
-							>
-								Submit
-							</button>
+							<a className="button is-success" onClick={this.handleSubmit} disabled={!author || !body}>
+								<span className="icon">
+									<i className={`fa ${comment ? 'fa-check' : 'fa-plus-circle'}`}></i>
+								</span>
+								<span>{comment ? 'SAVE' : 'ADD'}</span>
+							</a>
 						</p>
 					</div>
 				</div>
