@@ -24,10 +24,7 @@ class Post extends Component {
 			<div className="card">
 				<Link
 					className="post"
-					to={{
-						pathname: `${category}/${postId}`,
-						state: { post }
-					}}
+					to={`${category}/${postId}`}
 				>
 					<div className="card-content">
 						<div className="media">

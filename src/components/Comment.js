@@ -20,7 +20,7 @@ class Comment extends Component {
 					</div>
 					<div className="media-content">
 						<p className="title is-6">{comment.author}</p>
-						<p className="subtitle is-7"> @ {toDateString(comment.timestamp)}</p>
+						<p className="subtitle is-7"> on {toDateString(comment.timestamp)}</p>
 					</div>
 				</div>
 

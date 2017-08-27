@@ -86,7 +86,7 @@ class PostDetails extends Component {
 									<div className="content">
 										<p>
 											<strong>{post.title}</strong>
-											<small> by {post.author} @ {toDateString(post.timestamp)}</small>
+											<small> by {post.author} on {toDateString(post.timestamp)}</small>
 											<br />
 											{post.body}
 										</p>
