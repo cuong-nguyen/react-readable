@@ -9,7 +9,7 @@ body {
 }
 
 .image img {
-	border-radius: 50%;
+	border-radius: 5%;
 }
 
 .icon .fa-heart {
@@ -25,8 +25,7 @@ a.category {
 	margin: 0 5px;
 }
 
-.new-comment {
-	border-top: 1px solid rgba(219, 219, 219, 0.5);
+.manage-comment {
 	margin-top: 1rem;
 	margin-bottom: 2rem;
 	padding-top: 1rem;

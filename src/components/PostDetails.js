@@ -5,19 +5,21 @@ import {
 	fetchPost,
 	fetchPostComments,
 	votePost,
-	addComment,
 	deletePost,
 	editPost,
-	getCategories
+	getCategories,
+	addComment,
+	editComment
 } from '../actions'
-import { Comment, Voting, NewComment, ManagePost } from '../components'
+import { Comment, Voting, ManageComment, ManagePost } from '../components'
 import { getPost, getPostComments } from '../reducers'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
 class PostDetails extends Component {
 	state = {
-		postModalOpen: false
+		postModalOpen: false,
+		commentModalOpen: false,
 	}
 
 	componentDidMount() {
@@ -32,7 +34,28 @@ class PostDetails extends Component {
 		this.setState({ postModalOpen: true })
 	}
 
-	closeManagePostModal = () => this.setState({ postModalOpen: false })
+	openManageCommentModal = (comment) => {
+		this.editingComment = comment
+		this.setState({ commentModalOpen: true })
+	}
+
+	closeModal = () => this.setState({ postModalOpen: false, commentModalOpen: false })
+
+	handleSubmitComment = (comment) => {
+		const { addComment, editComment, post } = this.props
+
+		if (comment.id) {
+			editComment(comment)
+			this.closeModal()
+		} else {
+			addComment({
+				id: v4(),
+				...comment,
+				parentId: post.id,
+				timestamp: new Date().getTime()
+			})
+		}
+	}
 
 	handleSubmitPost = (post) => {
 		const { editPost } = this.props
@@ -40,17 +63,6 @@ class PostDetails extends Component {
 		editPost(post)
 
 		this.setState({ postModalOpen: false })
-	}
-
-	handleSubmitComment = (comment) => {
-		const { post, addComment } = this.props
-
-		addComment({
-			id: v4(),
-			...comment,
-			parentId: post.id,
-			timestamp: new Date().getTime()
-		})
 	}
 
 	handleDeletePost = () => {
@@ -61,7 +73,7 @@ class PostDetails extends Component {
 
 	render() {
 		const { post, comments, votePost, categories } = this.props
-		const { postModalOpen } = this.state
+		const { postModalOpen, commentModalOpen } = this.state
 
 		return (
 			<div>
@@ -97,18 +109,36 @@ class PostDetails extends Component {
 							<strong>{comments.length ? `Comments (${comments.length})` : 'No comments! Be the first to comment below'}</strong>
 						</h3>
 						<br />
-						{comments.map(comment => <Comment key={comment.id} {...comment} />)}
+						{comments.map(comment =>
+							<Comment
+								onEdit={this.openManageCommentModal}
+								key={comment.id}
+								{...comment}
+							/>)}
 					</div>
 				)}
 
-				<NewComment onSubmit={this.handleSubmitComment} />
+				{post && <ManageComment postId={post.id} onSubmit={this.handleSubmitComment} />}
+
+				<Modal
+					isOpen={commentModalOpen}
+					contentLabel='Modal'
+					className='post-modal'
+					overlayClassName='post-overlay'
+					onRequestClose={this.closeModal}
+				>
+					{post && <ManageComment
+						postId={post.id}
+						comment={this.editingComment}
+						onSubmit={this.handleSubmitComment} />}
+				</Modal>
 
 				<Modal
 					isOpen={postModalOpen}
 					contentLabel='Modal'
 					className='post-modal'
 					overlayClassName='post-overlay'
-					onRequestClose={this.closeManagePostModal}
+					onRequestClose={this.closeModal}
 				>
 					<ManagePost
 						post={this.editingPost}
@@ -124,7 +154,7 @@ class PostDetails extends Component {
 export default connect(
 	(state, { match }) => {
 		const post = getPost(state, match.params.postId)
-		console.log(state.categories)
+
 		return {
 			post,
 			totalVotes: post ? post.voteScore : null,
@@ -136,9 +166,10 @@ export default connect(
 		fetchPost,
 		fetchPostComments,
 		votePost,
-		addComment,
 		deletePost,
 		editPost,
 		getCategories,
+		addComment,
+		editComment,
 	}
 )(PostDetails)

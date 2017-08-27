@@ -8,7 +8,7 @@ import { getComment } from '../reducers'
 class Comment extends Component {
 
 	render() {
-		const { id, comment, voteComment, deleteComment } = this.props
+		const { id, comment, voteComment, deleteComment, onEdit } = this.props
 
 		return (
 			<article className="media">
@@ -29,6 +29,7 @@ class Comment extends Component {
 								upVote={() => voteComment(id, 'upVote')}
 								downVote={() => voteComment(id, 'downVote')}
 								onDelete={() => deleteComment(id)}
+								onEdit={() => onEdit(comment)}
 							/>
 						</div>
 					</div>

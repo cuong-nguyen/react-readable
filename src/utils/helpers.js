@@ -17,7 +17,7 @@ const createRequestHeaders = (config) => {
 
 const toDateString = (unixTime) => {
 	const date = new Date(unixTime)
-	return `${date.getDay()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`
+	return `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`
 }
 
 export {

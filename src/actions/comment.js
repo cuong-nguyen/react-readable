@@ -64,9 +64,27 @@ const deleteComment = (commentId) => {
 	}
 }
 
+const editComment = (updatingComment) => {
+	return (dispatch) => {
+		const headers = createRequestHeaders({ 'Content-Type': 'application/json' })
+		const init = {
+			method: 'PUT',
+			headers,
+			body: JSON.stringify({ ...updatingComment })
+		}
+
+		fetch(`${hostOrigin}/comments/${updatingComment.id}`, init)
+			.then(response => response.json())
+			.then(comment => {
+				dispatch({ type: actionTypes.EDIT_COMMENT, comment })
+			})
+	}
+}
+
 export {
 	fetchPostComments,
 	addComment,
 	voteComment,
 	deleteComment,
+	editComment,
 }
