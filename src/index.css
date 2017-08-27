@@ -21,8 +21,8 @@ a.post {
 }
 
 a.category {
-	display: inline-block;
-	margin: 0 5px;
+	color: #FFF;
+	font-weight: 500;
 }
 
 .manage-comment {

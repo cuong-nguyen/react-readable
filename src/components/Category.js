@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { Post, Filter, SortBy, ManagePost } from '../components'
+import { Post, Filter, SortBy, ManagePost, Tag } from '../components'
 import { getCategories, fetchPosts, sortPost, addPost, editPost } from '../actions'
 import { getSortedPosts } from '../reducers'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
@@ -50,11 +49,9 @@ class Category extends Component {
 						<strong>Categories</strong>
 					</p>
 					<div className="panel-block">
-						{categories.map(cat => (
-							<Link className="category" key={cat.name} to={`/${cat.name}`}>
-								<span className="tag is-info">#{cat.name}</span>
-							</Link>
-						))}
+						<div className="field is-grouped is-grouped-multiline">
+							{categories.map((category, idx) => <Tag key={idx} text={category.name} />)}
+						</div>
 					</div>
 				</nav>
 
