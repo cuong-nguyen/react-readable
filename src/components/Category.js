@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Post, Filter, SortBy, ManagePost } from '../components'
-import { Link } from 'react-router-dom'
+import { Post, Filter, SortBy, ManagePost, GoToHome } from '../components'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 import { connect } from 'react-redux'
 import { getPostsByCategory } from '../reducers'
@@ -69,13 +68,7 @@ class Category extends Component {
 					<a onClick={() => this.openManagePostModal(null)}>Add a post</a>
 				</div>
 
-				<div className="home">
-					<Link to="/" className="button is-large">
-						<span className="icon is-large">
-							<i className="fa fa-home"></i>
-						</span>
-					</Link>
-				</div>
+				<GoToHome />
 
 				<Modal
 					isOpen={postModalOpen}
