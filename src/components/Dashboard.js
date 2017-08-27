@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { Post, Filter, SortBy, ManagePost } from '../components'
-import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 import { connect } from 'react-redux'
-import { getPostsByCategory } from '../reducers'
-import { sortPost, addPost, editPost } from '../actions'
+import { Post, Filter, SortBy, ManagePost, Tag } from '../components'
+import { getCategories, fetchPosts, sortPost, addPost, editPost } from '../actions'
+import { getSortedPosts } from '../reducers'
+import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
-class Posts extends Component {
+class Dashboard extends Component {
 	state = {
-		postModalOpen: false
+		postModalOpen: false,
 	}
 
 	openManagePostModal = (post) => {
@@ -33,13 +33,27 @@ class Posts extends Component {
 		this.setState({ postModalOpen: false })
 	}
 
+	componentDidMount() {
+		this.props.getCategories()
+		this.props.fetchPosts()
+	}
+
 	render() {
-		const { posts, categoryName, sortPost } = this.props
+		const { categories, posts, sortPost } = this.props
 		const { postModalOpen } = this.state
 
 		return (
 			<div>
-				<h1 className="title">#{categoryName}</h1>
+				<nav className="panel">
+					<p className="panel-heading">
+						<strong>Categories</strong>
+					</p>
+					<div className="panel-block">
+						<div className="field is-grouped is-grouped-multiline">
+							{categories.map((category, idx) => <Tag key={idx} text={category.name} />)}
+						</div>
+					</div>
+				</nav>
 
 				{posts.length > 1 && (
 					<Filter>
@@ -83,17 +97,16 @@ class Posts extends Component {
 }
 
 export default connect(
-	(state, { match }) => {
-		const categoryName = match.params.categoryName
-
-		return {
-			posts: getPostsByCategory(state, categoryName),
-			categoryName,
-		}
-	},
+	(state) => ({
+		categories: state.categories,
+		posts: getSortedPosts(state),
+		postFilter: state.postFilter,
+	}),
 	{
+		getCategories,
+		fetchPosts,
 		sortPost,
 		addPost,
 		editPost,
 	}
-)(Posts)
+)(Dashboard)

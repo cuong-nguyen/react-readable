@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Post, Filter, SortBy, ManagePost, Tag } from '../components'
-import { getCategories, fetchPosts, sortPost, addPost, editPost } from '../actions'
-import { getSortedPosts } from '../reducers'
+import { Post, Filter, SortBy, ManagePost } from '../components'
 import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
+import { connect } from 'react-redux'
+import { getPostsByCategory } from '../reducers'
+import { sortPost, addPost, editPost } from '../actions'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
 class Category extends Component {
 	state = {
-		postModalOpen: false,
+		postModalOpen: false
 	}
 
 	openManagePostModal = (post) => {
@@ -33,27 +33,13 @@ class Category extends Component {
 		this.setState({ postModalOpen: false })
 	}
 
-	componentDidMount() {
-		this.props.getCategories()
-		this.props.fetchPosts()
-	}
-
 	render() {
-		const { categories, posts, sortPost } = this.props
+		const { posts, categoryName, sortPost } = this.props
 		const { postModalOpen } = this.state
 
 		return (
 			<div>
-				<nav className="panel">
-					<p className="panel-heading">
-						<strong>Categories</strong>
-					</p>
-					<div className="panel-block">
-						<div className="field is-grouped is-grouped-multiline">
-							{categories.map((category, idx) => <Tag key={idx} text={category.name} />)}
-						</div>
-					</div>
-				</nav>
+				<h1 className="title">#{categoryName}</h1>
 
 				{posts.length > 1 && (
 					<Filter>
@@ -97,14 +83,15 @@ class Category extends Component {
 }
 
 export default connect(
-	(state) => ({
-		categories: state.categories,
-		posts: getSortedPosts(state),
-		postFilter: state.postFilter,
-	}),
+	(state, { match }) => {
+		const categoryName = match.params.categoryName
+
+		return {
+			posts: getPostsByCategory(state, categoryName),
+			categoryName,
+		}
+	},
 	{
-		getCategories,
-		fetchPosts,
 		sortPost,
 		addPost,
 		editPost,

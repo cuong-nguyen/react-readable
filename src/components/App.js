@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { Category, Posts, PostDetails } from '../components'
+import { Dashboard, Category, PostDetails } from '../components'
 
 class App extends Component {
 	render() {
 		return (
 			<div className="container">
 				<Switch>
-					<Route exact path="/" component={Category} />
+					<Route exact path="/" component={Dashboard} />
 					<Route path="/:categoryName/:postId" component={PostDetails} />
-					<Route path="/:categoryName" component={Posts} />
+					<Route path="/:categoryName" component={Category} />
 				</Switch>
 			</div>
 		);
