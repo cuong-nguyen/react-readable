@@ -1,7 +1,10 @@
 import * as actionTypes from '../actions/actionTypes'
+import { updateObject, updateItemInArray } from '../utils/reducer'
 import { SORT_ASC, SORT_BY_DATE, SORT_BY_VOTES } from '../constants'
 
 const posts = (state = [], action) => {
+	let post
+
 	switch (action.type) {
 		case actionTypes.GET_POSTS:
 			return action.posts.filter(p => !p.deleted)
@@ -13,12 +16,8 @@ const posts = (state = [], action) => {
 			]
 
 		case actionTypes.VOTE_POST:
-			return state.map(post => {
-				if (post.id === action.post.id) {
-					return action.post
-				}
-
-				return post
+			return updateItemInArray(state, action.post.id, (item) => {
+				return updateObject(item, { voteScore: action.post.voteScore })
 			})
 
 		case actionTypes.DELETE_POST:
@@ -28,11 +27,8 @@ const posts = (state = [], action) => {
 			return [...state, action.post]
 
 		case actionTypes.EDIT_POST:
-			return state.map(post => {
-				if (post.id === action.post.id) {
-					return action.post
-				}
-				return post
+			return updateItemInArray(state, action.post.id, (item) => {
+				return updateObject(item, { ...action.post })
 			})
 
 		default:

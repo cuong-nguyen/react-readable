@@ -1,11 +1,12 @@
 import * as actionTypes from '../actions/actionTypes'
+import { updateObject, updateItemInArray } from '../utils/reducer'
 
 const comments = (state = {}, action) => {
 	let postId
 
 	switch (action.type) {
 		case actionTypes.GET_COMMENTS:
-			return Object.assign({}, state, { [action.postId]: action.comments })
+			return updateObject(state, { [action.postId]: action.comments })
 
 		case actionTypes.ADD_COMMENT:
 			postId = action.comment.parentId
@@ -23,11 +24,8 @@ const comments = (state = {}, action) => {
 
 			return {
 				...state,
-				[postId]: state[postId].map(comment => {
-					if (comment.id === action.comment.id) {
-						return action.comment
-					}
-					return comment
+				[postId]: updateItemInArray(state[postId], action.comment.id, (item) => {
+					return updateObject(item, { voteScore: action.comment.voteScore })
 				})
 			}
 
@@ -44,11 +42,8 @@ const comments = (state = {}, action) => {
 
 			return {
 				...state,
-				[postId]: state[postId].map(comment => {
-					if (comment.id === action.comment.id) {
-						return action.comment
-					}
-					return comment
+				[postId]: updateItemInArray(state[postId], action.comment.id, (item) => {
+					return updateObject(item, { ...action.comment })
 				})
 			}
 
