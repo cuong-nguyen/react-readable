@@ -15,7 +15,7 @@ const posts = (state = [], action) => {
 		case actionTypes.VOTE_POST:
 			return state.map(post => {
 				if (post.id === action.post.id) {
-					post.voteScore = action.post.voteScore
+					return action.post
 				}
 
 				return post

@@ -86,15 +86,10 @@ class Post extends Component {
 }
 
 export default connect(
-	(state, ownProps) => {
-		const post = getPost(state, ownProps.postId)
-
-		return {
-			post,
-			comments: getPostComments(state, ownProps.postId),
-			totalVotes: post.voteScore
-		}
-	},
+	(state, ownProps) => ({
+		post: getPost(state, ownProps.postId),
+		comments: getPostComments(state, ownProps.postId),
+	}),
 	{
 		votePost,
 		deletePost,
