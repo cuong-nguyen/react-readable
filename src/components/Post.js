@@ -3,7 +3,8 @@ import { toDateString } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 import { Action } from '../components'
 import { votePost, deletePost, fetchPostComments } from '../actions'
-import { getPost, getPostComments } from '../reducers'
+import { getPost } from '../selectors/postSelectors'
+import { getPostComments } from '../selectors/commentSelectors'
 import { connect } from 'react-redux'
 
 class Post extends Component {

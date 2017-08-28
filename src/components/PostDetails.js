@@ -12,7 +12,8 @@ import {
 	editComment
 } from '../actions'
 import { Comment, Voting, ManageComment, ManagePost, GoToHome } from '../components'
-import { getPost, getPostComments } from '../reducers'
+import { getPost } from '../selectors/postSelectors'
+import { getPostComments } from '../selectors/commentSelectors'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 

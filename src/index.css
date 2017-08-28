@@ -87,10 +87,10 @@ a.category {
 
 .comment-modal {
 	position: absolute;
-	top: 150px;
+	top: 140px;
 	left: 300px;
 	right: 300px;
-	bottom: 150px;
+	bottom: 140px;
 	border: 1px solid rgb(204, 204, 204);
 	background: rgb(255, 255, 255);
 	overflow: auto;

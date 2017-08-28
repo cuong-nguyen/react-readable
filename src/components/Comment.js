@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Voting } from '../components'
 import { toDateString } from '../utils/helpers'
 import { voteComment, deleteComment } from '../actions'
-import { getComment } from '../reducers'
+import { getComment } from '../selectors/commentSelectors'
 
 class Comment extends Component {
 
