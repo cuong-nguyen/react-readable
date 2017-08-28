@@ -25,7 +25,7 @@ const comments = (state = {}, action) => {
 				...state,
 				[postId]: state[postId].map(comment => {
 					if (comment.id === action.comment.id) {
-						comment.voteScore = action.comment.voteScore
+						return action.comment
 					}
 					return comment
 				})

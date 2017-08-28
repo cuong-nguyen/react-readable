@@ -167,16 +167,11 @@ class PostDetails extends Component {
 }
 
 export default connect(
-	(state, { match }) => {
-		const post = getPost(state, match.params.postId)
-
-		return {
-			post,
-			totalVotes: post ? post.voteScore : null,
-			categories: state.categories,
-			comments: getPostComments(state, match.params.postId),
-		}
-	},
+	(state, { match }) => ({
+		post: getPost(state, match.params.postId),
+		categories: state.categories,
+		comments: getPostComments(state, match.params.postId),
+	}),
 	{
 		fetchPost,
 		fetchPostComments,
