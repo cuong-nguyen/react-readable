@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { TextInput, Textarea } from './inputs'
 
 class ManageComment extends Component {
 	static propTypes = {
@@ -60,27 +61,24 @@ class ManageComment extends Component {
 							{comment ? ' Edit Comment' : ' New Comment'}
 						</strong>
 					</div>
-					<div className="field">
-						<p className="control">
-							<input
-								autoFocus
-								name="author"
-								value={this.state.author}
-								onChange={this.onChange}
-								className="input"
-								placeholder="Enter your name..."></input>
-						</p>
-					</div>
-					<div className="field">
-						<p className="control">
-							<textarea
-								name="body"
-								value={this.state.body}
-								onChange={this.onChange}
-								className="textarea"
-								placeholder="Enter your comment..."></textarea>
-						</p>
-					</div>
+
+					<TextInput
+						autofocus
+						label="Name"
+						name="author"
+						value={author}
+						placeholder="Enter your name"
+						onChange={this.onChange}
+					/>
+
+					<Textarea
+						label="Comment"
+						name="body"
+						value={body}
+						onChange={this.onChange}
+						placeholder="Enter your comment"
+					/>
+
 					<div className="field">
 						<p className="control">
 							<a

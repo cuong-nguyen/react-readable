@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { TextInput, SelectInput, Textarea } from './inputs'
 
 class ManagePost extends Component {
 	static propTypes = {
@@ -47,63 +48,42 @@ class ManagePost extends Component {
 
 		return (
 			<div>
-				<div className="field">
-					<label className="label">Name</label>
-					<div className="control">
-						<input
-							autoFocus
-							className="input"
-							type="text"
-							placeholder="Enter your name"
-							name="author"
-							value={author}
-							onChange={this.onChange}
-						/>
-					</div>
-				</div>
+				<TextInput
+					autofocus
+					name="author"
+					label="Name"
+					value={author}
+					placeholder="Enter your name"
+					onChange={this.onChange}
+				/>
 
-				<div className="field">
-					<label className="label">Category</label>
-					{categories &&
-						<div className="select">
-							<select
-								name="category"
-								value={category}
-								onChange={this.onChange}
-							>
-								{categories.map(category => <option key={category.name}>{category.name}</option>)}
-							</select>
-						</div>}
-				</div>
+				{categories &&
+					<SelectInput
+						label="Category"
+						name="category"
+						value={category}
+						onChange={this.onChange}
+					>
+						{categories.map(category => <option key={category.name}>{category.name}</option>)}
+					</SelectInput>
+				}
 
-				<div className="field">
-					<label className="label">Title</label>
-					<div className="control">
-						<input
-							value={title}
-							name="title"
-							onChange={this.onChange}
-							className="input"
-							type="email"
-							placeholder="Enter post title"
-						/>
-					</div>
-				</div>
+				<TextInput
+					name="title"
+					type="email"
+					label="Title"
+					value={title}
+					placeholder="Enter post title"
+					onChange={this.onChange}
+				/>
 
-				<div className="field">
-					<label className="label">Body</label>
-					<div className="control">
-						<textarea
-							value={body}
-							name="body"
-							onChange={this.onChange}
-							className="textarea"
-							type="email"
-							placeholder="Enter post body"
-						>
-						</textarea>
-					</div>
-				</div>
+				<Textarea
+					label="Body"
+					name="body"
+					value={body}
+					onChange={this.onChange}
+					placeholder="Enter post body"
+				/>
 
 				<div className="field">
 					<p className="control">
