@@ -30,8 +30,15 @@ class ManagePost extends Component {
 		this.setState({ formInput })
 	}
 
+	shouldSubmit = () => {
+		const { author, title, body, category } = this.state.formInput
+		return !!(author && title && body && category)
+	}
+
 	handleSubmit = () => {
-		this.props.onSubmit(this.state.formInput)
+		if (this.shouldSubmit()) {
+			this.props.onSubmit(this.state.formInput)
+		}
 	}
 
 	render() {
@@ -100,7 +107,11 @@ class ManagePost extends Component {
 
 				<div className="field">
 					<p className="control">
-						<a className="button is-primary" onClick={this.handleSubmit}>
+						<a
+							className="button is-primary"
+							onClick={this.handleSubmit}
+							disabled={!this.shouldSubmit()}
+						>
 							<span className="icon">
 								<i className={`fa ${post ? 'fa-check' : 'fa-plus-circle'}`}></i>
 							</span>

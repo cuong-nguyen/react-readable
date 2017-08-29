@@ -29,10 +29,15 @@ class ManageComment extends Component {
 		this.setState({ [e.target.name]: e.target.value })
 	}
 
+	shouldSubmit = () => {
+		const { author, body } = this.state
+		return !!(author && body)
+	}
+
 	handleSubmit = () => {
 		const { author, body } = this.state
 
-		if (author && body) {
+		if (this.shouldSubmit()) {
 			const { comment } = this.props
 			const updatingComment = Object.assign({}, comment, { author, body })
 			this.props.onSubmit(updatingComment)
@@ -78,7 +83,11 @@ class ManageComment extends Component {
 					</div>
 					<div className="field">
 						<p className="control">
-							<a className="button is-primary" onClick={this.handleSubmit} disabled={!author || !body}>
+							<a
+								className="button is-primary"
+								onClick={this.handleSubmit}
+								disabled={!this.shouldSubmit()}
+							>
 								<span className="icon">
 									<i className={`fa ${comment ? 'fa-check' : 'fa-plus-circle'}`}></i>
 								</span>
