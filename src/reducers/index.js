@@ -5,8 +5,8 @@ import posts from './posts'
 import filter from './filter'
 
 export default combineReducers({
-	categories,
-	posts,
-	comments,
-	filter,
+  categories,
+  posts,
+  comments,
+  filter,
 })

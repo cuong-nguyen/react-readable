@@ -3,54 +3,51 @@ import { updateObject, updateItemInArray } from '../utils/reducer'
 import { SORT_ASC, SORT_BY_DATE, SORT_BY_VOTES } from '../constants'
 
 const comments = (state = {}, action) => {
-	let postId
+  let postId
 
-	switch (action.type) {
-		case actionTypes.GET_COMMENTS:
-			return updateObject(state, { [action.postId]: action.comments })
+  switch (action.type) {
+    case actionTypes.GET_COMMENTS:
+      return updateObject(state, { [action.postId]: action.comments })
 
-		case actionTypes.ADD_COMMENT:
-			postId = action.comment.parentId
+    case actionTypes.ADD_COMMENT:
+      postId = action.comment.parentId
 
-			return {
-				...state,
-				[postId]: [
-					...state[postId],
-					action.comment,
-				]
-			}
+      return {
+        ...state,
+        [postId]: [...state[postId], action.comment]
+      }
 
-		case actionTypes.VOTE_COMMENT:
-			postId = action.comment.parentId
+    case actionTypes.VOTE_COMMENT:
+      postId = action.comment.parentId
 
-			return {
-				...state,
-				[postId]: updateItemInArray(state[postId], action.comment.id, (item) => {
-					return updateObject(item, { voteScore: action.comment.voteScore })
-				})
-			}
+      return {
+        ...state,
+        [postId]: updateItemInArray(state[postId], action.comment.id, item => {
+          return updateObject(item, { voteScore: action.comment.voteScore })
+        })
+      }
 
-		case actionTypes.DELETE_COMMENT:
-			const { id: commentId, parentId: pId } = action.deletedComment
+    case actionTypes.DELETE_COMMENT:
+      const { id: commentId, parentId: pId } = action.deletedComment
 
-			return {
-				...state,
-				[pId]: state[pId].filter(c => c.id !== commentId)
-			}
+      return {
+        ...state,
+        [pId]: state[pId].filter(c => c.id !== commentId)
+      }
 
-		case actionTypes.EDIT_COMMENT:
-			postId = action.comment.parentId
+    case actionTypes.EDIT_COMMENT:
+      postId = action.comment.parentId
 
-			return {
-				...state,
-				[postId]: updateItemInArray(state[postId], action.comment.id, (item) => {
-					return updateObject(item, { ...action.comment })
-				})
-			}
+      return {
+        ...state,
+        [postId]: updateItemInArray(state[postId], action.comment.id, item => {
+          return updateObject(item, { ...action.comment })
+        })
+      }
 
-		default:
-			return state
-	}
+    default:
+      return state
+  }
 }
 
 export default comments
@@ -58,22 +55,27 @@ export default comments
 export const getPostComments = (state, postId) => state[postId]
 
 export const sortPostComments = (state, postId, { sortBy, sortDir }) => {
-	switch (sortBy) {
-		case SORT_BY_VOTES:
-			return state[postId].sort((a, b) =>
-				sortDir === SORT_ASC
-					? a.voteScore - b.voteScore
-					: b.voteScore - a.voteScore)
+  switch (sortBy) {
+    case SORT_BY_VOTES:
+      return state[postId].sort(
+        (a, b) =>
+          sortDir === SORT_ASC
+            ? a.voteScore - b.voteScore
+            : b.voteScore - a.voteScore
+      )
 
-		case SORT_BY_DATE:
-			return state[postId].sort((a, b) =>
-				sortDir === SORT_ASC
-					? a.timestamp - b.timestamp
-					: b.timestamp - a.timestamp)
+    case SORT_BY_DATE:
+      return state[postId].sort(
+        (a, b) =>
+          sortDir === SORT_ASC
+            ? a.timestamp - b.timestamp
+            : b.timestamp - a.timestamp
+      )
 
-		default:
-			return state[postId]
-	}
+    default:
+      return state[postId]
+  }
 }
 
-export const getComment = (state, id, postId) => state[postId].find(comment => comment.id === id)
+export const getComment = (state, id, postId) =>
+  state[postId].find(comment => comment.id === id)

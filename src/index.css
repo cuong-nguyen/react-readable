@@ -1,33 +1,33 @@
 body {
-	margin: 0;
+  margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
 .container {
-	padding: 20px;
+  padding: 20px;
 }
 
 .image img {
-	border-radius: 50%;
+  border-radius: 50%;
 }
 
 .icon .fa-heart {
-	color: #e0245e;
+  color: #e0245e;
 }
 
 a.post {
-	color: #000000;
+  color: #000000;
 }
 
 a.category {
-	color: #FFF;
-	font-weight: 500;
+  color: #fff;
+  font-weight: 500;
 }
 
 .manage-comment {
-	margin-bottom: 2rem;
-	padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
 }
 
 .new-post {
@@ -45,111 +45,112 @@ a.category {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   font-size: 0;
 }
 .home {
-	position: fixed;
-	top: 15px;
-	left: 15px;
+  position: fixed;
+  top: 15px;
+  left: 15px;
 }
 
 .new-comment {
-	position: fixed;
-	left: 15px;
-	bottom: 20px;
+  position: fixed;
+  left: 15px;
+  bottom: 20px;
 }
 
 .home a.button,
 .new-comment a.button {
-	border-radius: 50%;
-	background: #00d1b2;
-	color: #FFF;
+  border-radius: 50%;
+  background: #00d1b2;
+  color: #fff;
 }
 
 .post-overlay {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	background-color: rgba(255, 255, 255, 0.75);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .post-modal {
-	position: absolute;
-	top: 40px;
-	left: 200px;
-	right: 200px;
-	bottom: 40px;
-	border: 1px solid rgb(204, 204, 204);
-	background: rgb(255, 255, 255);
-	overflow: auto;
-	border-radius: 4px;
-	outline: none;
-	padding: 20px;
-	border-radius: 3px;
-	box-shadow: 0 3px 8px 0 rgba(0,0,0,.24), 0 3px 12px 0 rgba(0,0,0,.12);
-	min-width: 500px;
+  position: absolute;
+  top: 40px;
+  left: 200px;
+  right: 200px;
+  bottom: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.24), 0 3px 12px 0 rgba(0, 0, 0, 0.12);
+  min-width: 500px;
 }
 
 .comment-modal {
-	position: absolute;
-	top: 120px;
-	left: 300px;
-	right: 300px;
-	bottom: 120px;
-	border: 1px solid rgb(204, 204, 204);
-	background: rgb(255, 255, 255);
-	overflow: auto;
-	border-radius: 4px;
-	outline: none;
-	padding: 20px;
-	border-radius: 3px;
-	box-shadow: 0 3px 8px 0 rgba(0,0,0,.24), 0 3px 12px 0 rgba(0,0,0,.12);
-	min-width: 500px;
+  position: absolute;
+  top: 120px;
+  left: 300px;
+  right: 300px;
+  bottom: 120px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.24), 0 3px 12px 0 rgba(0, 0, 0, 0.12);
+  min-width: 500px;
 }
 
 .comment {
-	padding: 0.5rem 1rem;
-	border-left: 3px solid #00d1b2;
-	border-radius: 5px;
-	margin: 1rem 0 1rem 2rem;
-	background-color: white;
-	-webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-	box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
-	color: #4a4a4a;
-	max-width: 100%;
-	position: relative;
+  padding: 0.5rem 1rem;
+  border-left: 3px solid #00d1b2;
+  border-radius: 5px;
+  margin: 1rem 0 1rem 2rem;
+  background-color: white;
+  -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  color: #4a4a4a;
+  max-width: 100%;
+  position: relative;
 }
 
 .comment .body {
-	margin: 0.25rem 0 1rem;
+  margin: 0.25rem 0 1rem;
 }
 
 .actions {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .actions .voting,
 .actions .manage {
-	display: flex;
-	justify-content: center
+  display: flex;
+  justify-content: center;
 }
 
 .level-item {
-	margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .comment-filter {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .comment-filter .tags:not(:last-child),
 .comment-filter .tags:last-child,
 .comment-filter .tags .tag {
-	margin: 0;
+  margin: 0;
 }
