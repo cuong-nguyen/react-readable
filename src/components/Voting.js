@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Action from './Action'
 
 const Voting = ({ upVote, downVote, voteScore, onEdit, onDelete }) => {
@@ -33,6 +34,14 @@ const Voting = ({ upVote, downVote, voteScore, onEdit, onDelete }) => {
 			</div>
 		</div>
 	)
+}
+
+Voting.propTypes = {
+	upVote: PropTypes.func.isRequired,
+	downVote: PropTypes.func.isRequired,
+	voteScore: PropTypes.number,
+	onEdit: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
 }
 
 export default Voting

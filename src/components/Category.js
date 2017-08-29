@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Post, Filter, SortBy, ManagePost, GoToHome } from '../components'
 import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
 import { connect } from 'react-redux'
@@ -8,6 +9,14 @@ import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
 class Category extends Component {
+	static propTypes = {
+		addPost: PropTypes.func.isRequired,
+		editPost: PropTypes.func.isRequired,
+		sortPost: PropTypes.func.isRequired,
+		posts: PropTypes.array,
+		categoryName: PropTypes.string.isRequired,
+	}
+
 	state = {
 		postModalOpen: false
 	}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Filter, SortBy } from '../components'
 import { sortComment } from '../actions'
@@ -27,6 +28,11 @@ const CommentFilter = ({ noOfComments, sortComment }) => {
 			}
 		</div>
 	)
+}
+
+CommentFilter.propTypes = {
+	noOfComments: PropTypes.number,
+	sortComment: PropTypes.func.isRequired,
 }
 
 export default connect(

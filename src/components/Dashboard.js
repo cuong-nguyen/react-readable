@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Post, Filter, SortBy, ManagePost, Tag } from '../components'
 import { getCategories, fetchPosts, sortPost, addPost, editPost } from '../actions'
@@ -8,6 +9,16 @@ import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
 class Dashboard extends Component {
+	static propTypes = {
+		sortPost: PropTypes.func.isRequired,
+		addPost: PropTypes.func.isRequired,
+		editPost: PropTypes.func.isRequired,
+		getCategories: PropTypes.func.isRequired,
+		fetchPosts: PropTypes.func.isRequired,
+		categories: PropTypes.array,
+		posts: PropTypes.array,
+	}
+
 	state = {
 		postModalOpen: false,
 	}

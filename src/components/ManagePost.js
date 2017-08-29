@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 class ManagePost extends Component {
+	static propTypes = {
+		post: PropTypes.object,
+		categories: PropTypes.array.isRequired,
+		onSubmit: PropTypes.func.isRequired,
+	}
+
 	state = {
 		formInput: {
 			author: '',

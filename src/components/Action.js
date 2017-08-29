@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Action = ({ icon, actionClass, onClick, children }) => {
 	return (
@@ -7,6 +8,13 @@ const Action = ({ icon, actionClass, onClick, children }) => {
 			{children}
 		</a>
 	)
+}
+
+Action.propTypes = {
+	icon: PropTypes.string,
+	actionClass: PropTypes.string,
+	onClick: PropTypes.func,
+	children: PropTypes.any,
 }
 
 export default Action

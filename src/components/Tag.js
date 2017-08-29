@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const Tag = ({ text }) => {
@@ -14,6 +15,10 @@ const Tag = ({ text }) => {
 			</div>
 		</div>
 	)
+}
+
+Tag.propTypes = {
+	text: PropTypes.string,
 }
 
 export default Tag

@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 const Filter = ({ currentFilter, children }) => {
-
 	return (
 		<div className="field has-addons">
 			{React.Children.map(children, (child) =>
@@ -10,6 +10,11 @@ const Filter = ({ currentFilter, children }) => {
 			}
 		</div>
 	)
+}
+
+Filter.propTypes = {
+	currentFilter: PropTypes.object.isRequired,
+	children: PropTypes.array,
 }
 
 export default connect(

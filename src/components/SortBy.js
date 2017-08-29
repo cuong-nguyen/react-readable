@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { SORT_ASC } from '../constants'
 
 const SortBy = ({ text, onClick, currentFilter, field }) => {
-	console.log(currentFilter, field)
 	const sortIcon =
 		currentFilter.sortBy === field
 			? currentFilter.sortDir === SORT_ASC
@@ -19,6 +19,13 @@ const SortBy = ({ text, onClick, currentFilter, field }) => {
 			</a>
 		</p>
 	)
+}
+
+SortBy.propTypes = {
+	text: PropTypes.string,
+	currentFilter: PropTypes.object,
+	onClick: PropTypes.func.isRequired,
+	field: PropTypes.string.isRequired,
 }
 
 export default SortBy

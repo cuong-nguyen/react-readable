@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { toDateString } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 import { Action } from '../components'
@@ -8,6 +9,15 @@ import { getPostComments } from '../selectors/commentSelectors'
 import { connect } from 'react-redux'
 
 class Post extends Component {
+	static propTypes = {
+		comments: PropTypes.array,
+		post: PropTypes.object,
+		postId: PropTypes.string,
+		votePost: PropTypes.func.isRequired,
+		deletePost: PropTypes.func.isRequired,
+		onEdit: PropTypes.func.isRequired,
+		fetchPostComments: PropTypes.func.isRequired,
+	}
 
 	componentDidMount() {
 		const { comments, post, fetchPostComments } = this.props

@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class ManageComment extends Component {
+	static propTypes = {
+		comment: PropTypes.object,
+		onSubmit: PropTypes.func.isRequired,
+	}
+
 	state = {
 		author: '',
 		body: ''

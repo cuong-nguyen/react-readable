@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toDateString } from '../utils/helpers'
 import {
@@ -18,6 +19,21 @@ import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
 class PostDetails extends Component {
+	static propTypes = {
+		post: PropTypes.object,
+		match: PropTypes.object,
+		comments: PropTypes.array,
+		categories: PropTypes.array,
+		fetchPost: PropTypes.func.isRequired,
+		fetchPostComments: PropTypes.func.isRequired,
+		getCategories: PropTypes.func.isRequired,
+		editComment: PropTypes.func.isRequired,
+		addComment: PropTypes.func.isRequired,
+		editPost: PropTypes.func.isRequired,
+		deletePost: PropTypes.func.isRequired,
+		votePost: PropTypes.func.isRequired,
+	}
+
 	state = {
 		postModalOpen: false,
 		commentModalOpen: false,
