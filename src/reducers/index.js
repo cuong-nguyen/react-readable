@@ -2,11 +2,11 @@ import { combineReducers } from 'redux'
 import categories from './categories'
 import comments from './comments'
 import posts from './posts'
-import postFilter from './postFilter'
+import filter from './filter'
 
 export default combineReducers({
 	categories,
 	posts,
 	comments,
-	postFilter,
+	filter,
 })

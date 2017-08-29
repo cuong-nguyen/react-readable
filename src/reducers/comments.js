@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes'
 import { updateObject, updateItemInArray } from '../utils/reducer'
+import { SORT_ASC, SORT_BY_DATE, SORT_BY_VOTES } from '../constants'
 
 const comments = (state = {}, action) => {
 	let postId
@@ -55,5 +56,24 @@ const comments = (state = {}, action) => {
 export default comments
 
 export const getPostComments = (state, postId) => state[postId]
+
+export const sortPostComments = (state, postId, { sortBy, sortDir }) => {
+	switch (sortBy) {
+		case SORT_BY_VOTES:
+			return state[postId].sort((a, b) =>
+				sortDir === SORT_ASC
+					? a.voteScore - b.voteScore
+					: b.voteScore - a.voteScore)
+
+		case SORT_BY_DATE:
+			return state[postId].sort((a, b) =>
+				sortDir === SORT_ASC
+					? a.timestamp - b.timestamp
+					: b.timestamp - a.timestamp)
+
+		default:
+			return state[postId]
+	}
+}
 
 export const getComment = (state, id, postId) => state[postId].find(comment => comment.id === id)

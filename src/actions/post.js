@@ -1,5 +1,6 @@
 import { createRequestHeaders, hostOrigin } from '../utils/helpers'
 import * as actionTypes from './actionTypes'
+import { FILTER_TYPE } from '../constants'
 
 const fetchPosts = () => {
 	return (dispatch) => {
@@ -61,7 +62,7 @@ const deletePost = (postId) => {
 }
 
 const sortPost = (sortBy) => {
-	return { type: actionTypes.SORT_POST, sortBy }
+	return { type: actionTypes.SORT_POST, sortBy, filterType: FILTER_TYPE.POST }
 }
 
 const addPost = (post) => {

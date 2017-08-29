@@ -11,9 +11,9 @@ import {
 	addComment,
 	editComment
 } from '../actions'
-import { Comment, Voting, ManageComment, ManagePost, GoToHome } from '../components'
+import { Comment, Voting, ManageComment, ManagePost, GoToHome, CommentFilter } from '../components'
 import { getPost } from '../selectors/postSelectors'
-import { getPostComments } from '../selectors/commentSelectors'
+import { sortPostComments } from '../selectors/commentSelectors'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
@@ -108,19 +108,16 @@ class PostDetails extends Component {
 						{comments && (
 							<div>
 								{comments.length
-									? (<div className="tags has-addons">
-										<span className="tag is-primary is-medium">Comment(s)</span>
-										<span className="tag is-medium">{comments.length}</span>
-									</div>
-									) : <strong>Be the first to comment below</strong>
+									? <CommentFilter noOfComments={comments.length} />
+									: <strong>Be the first to comment below</strong>
 								}
 								{comments.map(comment =>
 									<Comment
 										onEdit={this.openManageCommentModal}
 										key={comment.id}
 										{...comment}
-									/>)
-								}
+									/>
+								)}
 							</div>
 						)}
 
@@ -169,9 +166,10 @@ class PostDetails extends Component {
 
 export default connect(
 	(state, { match }) => ({
-		post: getPost(state, match.params.postId),
+		filter: state.filter,
 		categories: state.categories,
-		comments: getPostComments(state, match.params.postId),
+		post: getPost(state, match.params.postId),
+		comments: sortPostComments(state, match.params.postId),
 	}),
 	{
 		fetchPost,

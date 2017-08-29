@@ -1,5 +1,6 @@
 import { createRequestHeaders, hostOrigin } from '../utils/helpers'
 import * as actionTypes from './actionTypes'
+import { FILTER_TYPE } from '../constants'
 
 const fetchPostComments = (postId) => {
 	return (dispatch) => {
@@ -81,10 +82,15 @@ const editComment = (updatingComment) => {
 	}
 }
 
+const sortComment = (sortBy) => {
+	return { type: actionTypes.SORT_COMMENT, sortBy, filterType: FILTER_TYPE.COMMENT }
+}
+
 export {
 	fetchPostComments,
 	addComment,
 	voteComment,
 	deleteComment,
 	editComment,
+	sortComment,
 }

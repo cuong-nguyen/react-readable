@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Post, Filter, SortBy, ManagePost, GoToHome } from '../components'
-import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
+import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
 import { connect } from 'react-redux'
 import { getPostsByCategory } from '../selectors/postSelectors'
 import { sortPost, addPost, editPost } from '../actions'
@@ -41,8 +41,8 @@ class Category extends Component {
 			<div>
 				<h1 className="title">#{categoryName}</h1>
 
-				{posts.length > 1 && (
-					<Filter>
+				{posts.length > 1 &&
+					<Filter type={FILTER_TYPE.POST}>
 						<SortBy
 							text="Votes"
 							onClick={() => sortPost(SORT_BY_VOTES)}
@@ -54,7 +54,7 @@ class Category extends Component {
 							field={SORT_BY_DATE}
 						/>
 					</Filter>
-				)}
+				}
 
 				<div className="columns is-multiline">
 					{posts.map(post => (

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Post, Filter, SortBy, ManagePost, Tag } from '../components'
 import { getCategories, fetchPosts, sortPost, addPost, editPost } from '../actions'
 import { getSortedPosts } from '../selectors/postSelectors'
-import { SORT_BY_VOTES, SORT_BY_DATE } from '../constants'
+import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
 
@@ -55,8 +55,8 @@ class Dashboard extends Component {
 					</div>
 				</nav>
 
-				{posts.length > 1 && (
-					<Filter>
+				{posts.length > 1 &&
+					<Filter type={FILTER_TYPE.POST}>
 						<SortBy
 							text="Votes"
 							onClick={() => sortPost(SORT_BY_VOTES)}
@@ -68,7 +68,7 @@ class Dashboard extends Component {
 							field={SORT_BY_DATE}
 						/>
 					</Filter>
-				)}
+				}
 
 				<div className="columns is-multiline">
 					{posts.map(post => (
@@ -100,7 +100,7 @@ export default connect(
 	(state) => ({
 		categories: state.categories,
 		posts: getSortedPosts(state),
-		postFilter: state.postFilter,
+		filter: state.filter,
 	}),
 	{
 		getCategories,

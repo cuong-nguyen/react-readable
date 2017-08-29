@@ -114,14 +114,13 @@ a.category {
 	padding: 0.5rem 1rem;
 	border-left: 3px solid #00d1b2;
 	border-radius: 5px;
-	margin-bottom: 1.5rem;
+	margin: 1rem 0 1rem 2rem;
 	background-color: white;
 	-webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 	box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 	color: #4a4a4a;
 	max-width: 100%;
 	position: relative;
-	margin-left: 1.5rem;
 }
 
 .comment .body {
@@ -142,4 +141,15 @@ a.category {
 
 .level-item {
 	margin-right: 0.5rem;
+}
+
+.comment-filter {
+	display: flex;
+	justify-content: space-between;
+}
+
+.comment-filter .tags:not(:last-child),
+.comment-filter .tags:last-child,
+.comment-filter .tags .tag {
+	margin: 0;
 }

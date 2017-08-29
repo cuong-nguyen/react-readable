@@ -1,11 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const Filter = ({ children }) => {
+const Filter = ({ currentFilter, children }) => {
+
 	return (
 		<div className="field has-addons">
-			{children}
+			{React.Children.map(children, (child) =>
+				React.cloneElement(child, { ...child.props, currentFilter }))
+			}
 		</div>
 	)
 }
 
-export default Filter
+export default connect(
+	(state, ownProps) => ({
+		currentFilter: state.filter[ownProps.type]
+	})
+)(Filter)
