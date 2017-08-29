@@ -123,14 +123,14 @@ class PostDetails extends Component {
 								}
 							</div>
 						)}
-						<br />
 
-						<a className="button is-primary new-comment" onClick={() => this.openManageCommentModal(null)}>
-							<span className="icon">
-								<i className="fa fa-comment"></i>
-							</span>
-							<span>Write your comment...</span>
-						</a>
+						<div className="new-comment">
+							<a className="button is-large" onClick={() => this.openManageCommentModal(null)}>
+								<span className="icon is-medium">
+									<i className="fa fa-comments-o"></i>
+								</span>
+							</a>
+						</div>
 
 						<Modal
 							isOpen={commentModalOpen}

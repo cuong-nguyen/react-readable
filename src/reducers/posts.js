@@ -3,8 +3,6 @@ import { updateObject, updateItemInArray } from '../utils/reducer'
 import { SORT_ASC, SORT_BY_DATE, SORT_BY_VOTES } from '../constants'
 
 const posts = (state = [], action) => {
-	let post
-
 	switch (action.type) {
 		case actionTypes.GET_POSTS:
 			return action.posts.filter(p => !p.deleted)
