@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { Route, Switch } from "react-router-dom"
-import { Dashboard, Category, PostDetails } from "../components"
+import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import { Dashboard, Category, PostDetails } from '../components'
 
 class App extends Component {
   render() {

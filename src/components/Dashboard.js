@@ -1,18 +1,18 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
-import { Post, Filter, SortBy, ManagePost, Tag } from "../components"
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Post, Filter, SortBy, ManagePost, CategoryList } from '../components'
 import {
   getCategories,
   fetchPosts,
   sortPost,
   addPost,
-  editPost
-} from "../actions"
-import { getSortedPosts } from "../selectors/postSelectors"
-import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from "../constants"
-import Modal from "react-modal"
-import { v4 } from "node-uuid"
+  editPost,
+} from '../actions'
+import { getSortedPosts } from '../selectors/postSelectors'
+import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
+import Modal from 'react-modal'
+import { v4 } from 'node-uuid'
 
 class Dashboard extends Component {
   static propTypes = {
@@ -22,11 +22,11 @@ class Dashboard extends Component {
     getCategories: PropTypes.func.isRequired,
     fetchPosts: PropTypes.func.isRequired,
     categories: PropTypes.array,
-    posts: PropTypes.array
+    posts: PropTypes.array,
   }
 
   state = {
-    postModalOpen: false
+    postModalOpen: false,
   }
 
   openManagePostModal = post => {
@@ -60,43 +60,42 @@ class Dashboard extends Component {
     const { postModalOpen } = this.state
 
     return (
-      <div>
-        <nav className="panel">
-          <p className="panel-heading">
-            <strong>Categories</strong>
-          </p>
-          <div className="panel-block">
-            <div className="field is-grouped is-grouped-multiline">
-              {categories.map((category, idx) => (
-                <Tag key={idx} text={category.name} />
-              ))}
+      <div className="columns">
+        {categories && (
+          <div className="column is-one-quarter">
+            <div className="field has-addons">
+              <strong>
+                <span className="tag is-warning">Categories</span>
+              </strong>
             </div>
+            <CategoryList categories={categories} />
           </div>
-        </nav>
-
-        {posts.length > 1 && (
-          <Filter type={FILTER_TYPE.POST}>
-            <SortBy
-              text="Votes"
-              onClick={() => sortPost(SORT_BY_VOTES)}
-              field={SORT_BY_VOTES}
-            />
-            <SortBy
-              text="Date"
-              onClick={() => sortPost(SORT_BY_DATE)}
-              field={SORT_BY_DATE}
-            />
-          </Filter>
         )}
 
-        <div className="columns is-multiline">
-          {posts.map(post => (
-            <div className="column is-one-third" key={post.id}>
-              <Post postId={post.id} onEdit={this.openManagePostModal} />
-            </div>
-          ))}
-        </div>
+        <div className="column">
+          {posts.length > 1 && (
+            <Filter type={FILTER_TYPE.POST}>
+              <SortBy
+                text="Votes"
+                onClick={() => sortPost(SORT_BY_VOTES)}
+                field={SORT_BY_VOTES}
+              />
+              <SortBy
+                text="Date"
+                onClick={() => sortPost(SORT_BY_DATE)}
+                field={SORT_BY_DATE}
+              />
+            </Filter>
+          )}
 
+          <div className="columns is-multiline">
+            {posts.map(post => (
+              <div className="column is-one-third" key={post.id}>
+                <Post postId={post.id} onEdit={this.openManagePostModal} />
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="new-post">
           <a onClick={() => this.openManagePostModal(null)}>Add a post</a>
         </div>
@@ -122,13 +121,13 @@ export default connect(
   state => ({
     categories: state.categories,
     posts: getSortedPosts(state),
-    filter: state.filter
+    filter: state.filter,
   }),
   {
     getCategories,
     fetchPosts,
     sortPost,
     addPost,
-    editPost
+    editPost,
   }
 )(Dashboard)

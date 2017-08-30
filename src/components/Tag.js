@@ -6,19 +6,19 @@ const Tag = ({ text }) => {
   return (
     <div className="control">
       <div className="tags has-addons">
-        <span className="tag is-info is-rounded">
+        <span className="tag is-info">
           <Link className="category" to={`/${text}`}>
             {text}
           </Link>
         </span>
-        <a className="tag is-delete is-rounded"> </a>
+        <a className="tag is-delete"> </a>
       </div>
     </div>
   )
 }
 
 Tag.propTypes = {
-  text: PropTypes.string
+  text: PropTypes.string,
 }
 
 export default Tag
