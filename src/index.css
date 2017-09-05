@@ -154,3 +154,7 @@ a.category {
 .comment-filter .tags .tag {
   margin: 0;
 }
+
+.post .card-content {
+  padding: 1rem;
+}

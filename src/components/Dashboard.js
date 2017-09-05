@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Post, Filter, SortBy, ManagePost, CategoryList } from '../components'
+import {
+  Post,
+  Filter,
+  SortBy,
+  ManagePost,
+  CategoryList,
+  NewCategory,
+} from '../components'
 import { sortPost, addPost, editPost } from '../actions'
 import { getSortedPosts } from '../selectors/postSelectors'
 import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
@@ -13,8 +20,6 @@ class Dashboard extends Component {
     sortPost: PropTypes.func.isRequired,
     addPost: PropTypes.func.isRequired,
     editPost: PropTypes.func.isRequired,
-    getCategories: PropTypes.func.isRequired,
-    fetchPosts: PropTypes.func.isRequired,
     categories: PropTypes.array,
     posts: PropTypes.array,
   }
@@ -58,6 +63,7 @@ class Dashboard extends Component {
               </strong>
             </div>
             <CategoryList categories={categories} />
+            <NewCategory />
           </div>
         )}
 
