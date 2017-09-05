@@ -14,7 +14,7 @@ const comments = (state = {}, action) => {
 
       return {
         ...state,
-        [postId]: [...state[postId], action.comment]
+        [postId]: [...state[postId], action.comment],
       }
 
     case actionTypes.VOTE_COMMENT:
@@ -24,7 +24,7 @@ const comments = (state = {}, action) => {
         ...state,
         [postId]: updateItemInArray(state[postId], action.comment.id, item => {
           return updateObject(item, { voteScore: action.comment.voteScore })
-        })
+        }),
       }
 
     case actionTypes.DELETE_COMMENT:
@@ -32,7 +32,7 @@ const comments = (state = {}, action) => {
 
       return {
         ...state,
-        [pId]: state[pId].filter(c => c.id !== commentId)
+        [pId]: state[pId].filter(c => c.id !== commentId),
       }
 
     case actionTypes.EDIT_COMMENT:
@@ -42,7 +42,7 @@ const comments = (state = {}, action) => {
         ...state,
         [postId]: updateItemInArray(state[postId], action.comment.id, item => {
           return updateObject(item, { ...action.comment })
-        })
+        }),
       }
 
     default:
@@ -55,9 +55,12 @@ export default comments
 export const getPostComments = (state, postId) => state[postId]
 
 export const sortPostComments = (state, postId, { sortBy, sortDir }) => {
+  const comments = state[postId]
+  if (!comments) return undefined
+
   switch (sortBy) {
     case SORT_BY_VOTES:
-      return state[postId].sort(
+      return comments.sort(
         (a, b) =>
           sortDir === SORT_ASC
             ? a.voteScore - b.voteScore
@@ -65,7 +68,7 @@ export const sortPostComments = (state, postId, { sortBy, sortDir }) => {
       )
 
     case SORT_BY_DATE:
-      return state[postId].sort(
+      return comments.sort(
         (a, b) =>
           sortDir === SORT_ASC
             ? a.timestamp - b.timestamp
@@ -73,7 +76,7 @@ export const sortPostComments = (state, postId, { sortBy, sortDir }) => {
       )
 
     default:
-      return state[postId]
+      return comments
   }
 }
 

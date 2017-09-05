@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toDateString } from '../utils/helpers'
 import {
-  fetchPost,
   fetchPostComments,
   votePost,
   deletePost,
   editPost,
-  getCategories,
   addComment,
-  editComment
+  editComment,
 } from '../actions'
 import {
   Comment,
@@ -18,7 +16,7 @@ import {
   ManageComment,
   ManagePost,
   GoToHome,
-  CommentFilter
+  CommentFilter,
 } from '../components'
 import { getPost } from '../selectors/postSelectors'
 import { sortPostComments } from '../selectors/commentSelectors'
@@ -31,33 +29,22 @@ class PostDetails extends Component {
     match: PropTypes.object,
     comments: PropTypes.array,
     categories: PropTypes.array,
-    fetchPost: PropTypes.func.isRequired,
     fetchPostComments: PropTypes.func.isRequired,
-    getCategories: PropTypes.func.isRequired,
     editComment: PropTypes.func.isRequired,
     addComment: PropTypes.func.isRequired,
     editPost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
-    votePost: PropTypes.func.isRequired
+    votePost: PropTypes.func.isRequired,
   }
 
   state = {
     postModalOpen: false,
-    commentModalOpen: false
+    commentModalOpen: false,
   }
 
   componentDidMount() {
-    const {
-      post,
-      match,
-      comments,
-      fetchPost,
-      fetchPostComments,
-      categories
-    } = this.props
-    post === undefined && fetchPost(match.params.postId)
+    const { match, comments, fetchPostComments } = this.props
     comments === undefined && fetchPostComments(match.params.postId)
-    categories === undefined && getCategories()
   }
 
   openManagePostModal = () => {
@@ -83,7 +70,7 @@ class PostDetails extends Component {
         id: v4(),
         ...comment,
         parentId: post.id,
-        timestamp: new Date().getTime()
+        timestamp: new Date().getTime(),
       })
     }
 
@@ -208,16 +195,14 @@ export default connect(
     filter: state.filter,
     categories: state.categories,
     post: getPost(state, match.params.postId),
-    comments: sortPostComments(state, match.params.postId)
+    comments: sortPostComments(state, match.params.postId),
   }),
   {
-    fetchPost,
     fetchPostComments,
     votePost,
     deletePost,
     editPost,
-    getCategories,
     addComment,
-    editComment
+    editComment,
   }
 )(PostDetails)

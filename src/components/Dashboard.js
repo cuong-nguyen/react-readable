@@ -2,13 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Post, Filter, SortBy, ManagePost, CategoryList } from '../components'
-import {
-  getCategories,
-  fetchPosts,
-  sortPost,
-  addPost,
-  editPost,
-} from '../actions'
+import { sortPost, addPost, editPost } from '../actions'
 import { getSortedPosts } from '../selectors/postSelectors'
 import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
 import Modal from 'react-modal'
@@ -48,11 +42,6 @@ class Dashboard extends Component {
     }
 
     this.setState({ postModalOpen: false })
-  }
-
-  componentDidMount() {
-    this.props.getCategories()
-    this.props.fetchPosts()
   }
 
   render() {
@@ -124,8 +113,6 @@ export default connect(
     filter: state.filter,
   }),
   {
-    getCategories,
-    fetchPosts,
     sortPost,
     addPost,
     editPost,
