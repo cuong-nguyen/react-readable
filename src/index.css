@@ -158,3 +158,21 @@ a.category {
 .post .card-content {
   padding: 1rem;
 }
+
+/* Log in */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 500px;
+}
+
+.login-message {
+  color: #f00;
+}

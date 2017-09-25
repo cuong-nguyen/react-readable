@@ -16,3 +16,5 @@ Endpoint should be running on port **5001**
 Run `yarn install` then `yarn start`
 
 App will be running at  [http://localhost:3000](http://localhost:3000).
+
+Log in using username **admin** and password **admin**
