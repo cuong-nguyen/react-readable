@@ -1,17 +1,4 @@
-const monthNames = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-]
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qIjoicmVhZGFibGUiLCJuYW1lIjoiQ3VvbmcgTmd1eWVuIiwic3RhdHVzIjoic2luZ2xlIn0.207hT9JVAzcdI0tmxdYC3IiCXu_0sEYSAI0T82f7fOU'
@@ -30,9 +17,15 @@ const createRequestHeaders = config => {
 
 const toDateString = unixTime => {
   const date = new Date(unixTime)
-  return `${date.getDate()} ${monthNames[
-    date.getMonth()
-  ]} ${date.getFullYear()}`
+
+  if (isNaN(date)) {
+    return ''
+  }
+
+  let day = date.getDate()
+  day = day < 10 ? '0' + day : day
+
+  return `${day} ${monthNames[date.getMonth()]} ${date.getFullYear()}`
 }
 
 export { hostOrigin, createRequestHeaders, toDateString }
