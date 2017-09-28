@@ -1,14 +1,23 @@
 import categories from '../../reducers/categories'
-import { GET_CATEGORIES } from '../../actions/actionTypes'
+import { GET_CATEGORIES, ADD_CATEGORY } from '../../actions/actionTypes'
 
 test('should return default state', () => {
-  const newState = []
+  const oldState = []
   const result = categories(undefined, { type: '' })
-  expect(result).toEqual(newState)
+  expect(result).toEqual(oldState)
 })
 
 test('should return new state with action', () => {
-  const newState = ['react', 'redux']
-  const result = categories([], { type: GET_CATEGORIES, categories: newState })
-  expect(result).toEqual(newState)
+  const newCategories = ['react', 'redux']
+  const newState = categories([], { type: GET_CATEGORIES, categories: newCategories })
+  expect(newState).toEqual(newCategories)
+})
+
+test('can add new category to store', () => {
+  const currentState = ['react', 'redux']
+  const newCategory = 'udacity'
+  const expectedState = ['react', 'redux', 'udacity']
+
+  const newState = categories(currentState, { type: ADD_CATEGORY, category: newCategory })
+  expect(newState).toEqual(expectedState)
 })
