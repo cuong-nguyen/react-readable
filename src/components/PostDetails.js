@@ -10,14 +10,7 @@ import {
   addComment,
   editComment,
 } from '../actions'
-import {
-  Comment,
-  Voting,
-  ManageComment,
-  ManagePost,
-  GoToHome,
-  CommentFilter,
-} from '../components'
+import { Comment, Voting, ManageComment, ManagePost, GoToHome, CommentFilter } from '../components'
 import { getPost } from '../selectors/postSelectors'
 import { sortPostComments } from '../selectors/commentSelectors'
 import Modal from 'react-modal'
@@ -57,8 +50,7 @@ class PostDetails extends Component {
     this.setState({ commentModalOpen: true })
   }
 
-  closeModal = () =>
-    this.setState({ postModalOpen: false, commentModalOpen: false })
+  closeModal = () => this.setState({ postModalOpen: false, commentModalOpen: false })
 
   handleSubmitComment = comment => {
     const { addComment, editComment, post } = this.props
@@ -134,20 +126,13 @@ class PostDetails extends Component {
                   <strong>Be the first to comment below</strong>
                 )}
                 {comments.map(comment => (
-                  <Comment
-                    onEdit={this.openManageCommentModal}
-                    key={comment.id}
-                    {...comment}
-                  />
+                  <Comment onEdit={this.openManageCommentModal} key={comment.id} {...comment} />
                 ))}
               </div>
             )}
 
             <div className="new-comment">
-              <a
-                className="button is-large"
-                onClick={() => this.openManageCommentModal(null)}
-              >
+              <a className="button is-large" onClick={() => this.openManageCommentModal(null)}>
                 <span className="icon is-medium">
                   <i className="fa fa-comments-o" />
                 </span>
@@ -193,7 +178,7 @@ class PostDetails extends Component {
 export default connect(
   (state, { match }) => ({
     filter: state.filter,
-    categories: state.categories,
+    categories: state.entities.categories,
     post: getPost(state, match.params.postId),
     comments: sortPostComments(state, match.params.postId),
   }),

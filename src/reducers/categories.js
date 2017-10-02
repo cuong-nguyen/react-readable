@@ -1,12 +1,30 @@
-import { GET_CATEGORIES, ADD_CATEGORY } from '../actions/actionTypes'
+import { RECEIVE_CATEGORIES, ADD_CATEGORY } from '../actions/actionTypes'
 
-const categories = (state = [], action) => {
+const initialState = {
+  byIds: {},
+  allIds: [],
+}
+
+const categories = (state = initialState, action) => {
   switch (action.type) {
-    case GET_CATEGORIES:
-      return action.categories
+    case RECEIVE_CATEGORIES:
+      return {
+        byIds: action.categories.reduce((ids, category) => {
+          ids[category.name] = category
+          return ids
+        }, {}),
+        allIds: action.categories.map(category => category.name),
+      }
 
     case ADD_CATEGORY:
-      return [...state, action.category]
+      return {
+        ...state,
+        byIds: {
+          ...state.byIds,
+          [action.category.name]: action.category,
+        },
+        allIds: [...state.allIds, action.category.name],
+      }
 
     default:
       return state
@@ -14,3 +32,6 @@ const categories = (state = [], action) => {
 }
 
 export default categories
+
+export const getIds = state => state.allIds
+export const getCategoryById = (state, id) => state.byIds[id]

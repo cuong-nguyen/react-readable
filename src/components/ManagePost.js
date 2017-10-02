@@ -8,17 +8,16 @@ class ManagePost extends Component {
   static propTypes = {
     post: PropTypes.object,
     categories: PropTypes.array.isRequired,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
   }
 
   state = {
     formInput: {
       author: '',
-      category:
-        this.props.match.params.categoryName || this.props.categories[0].name,
+      category: this.props.match.params.categoryName || this.props.categories[0].name,
       title: '',
-      body: ''
-    }
+      body: '',
+    },
   }
 
   componentDidMount() {
@@ -59,15 +58,8 @@ class ManagePost extends Component {
         />
 
         {categories && (
-          <SelectInput
-            label="Category"
-            name="category"
-            value={category}
-            onChange={this.onChange}
-          >
-            {categories.map(category => (
-              <option key={category.name}>{category.name}</option>
-            ))}
+          <SelectInput label="Category" name="category" value={category} onChange={this.onChange}>
+            {categories.map(category => <option key={category.name}>{category.name}</option>)}
           </SelectInput>
         )}
 
@@ -109,6 +101,6 @@ class ManagePost extends Component {
 
 export default withRouter(
   connect(state => ({
-    categories: state.categories
+    categories: state.entities.categories,
   }))(ManagePost)
 )

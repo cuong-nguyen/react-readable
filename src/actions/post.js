@@ -8,7 +8,7 @@ const fetchPosts = () => {
 
     const response = await fetch(`${hostOrigin}/posts`, { headers })
     const posts = await response.json()
-    dispatch({ type: actionTypes.GET_POSTS, posts })
+    dispatch({ type: actionTypes.RECEIVE_POSTS, posts })
   }
 }
 
@@ -87,12 +87,4 @@ const editPost = post => {
   }
 }
 
-export {
-  fetchPosts,
-  fetchPost,
-  votePost,
-  deletePost,
-  sortPost,
-  addPost,
-  editPost,
-}
+export { fetchPosts, fetchPost, votePost, deletePost, sortPost, addPost, editPost }

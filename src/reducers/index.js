@@ -6,9 +6,11 @@ import filter from './filter'
 import user from './user'
 
 export default combineReducers({
-  categories,
-  posts,
-  comments,
+  entities: combineReducers({
+    categories,
+    posts,
+    comments,
+  }),
   filter,
   user,
 })

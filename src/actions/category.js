@@ -8,7 +8,7 @@ const getCategories = () => {
     const response = await fetch(`${hostOrigin}/categories`, { headers })
     const { categories } = await response.json()
 
-    dispatch({ type: actionTypes.GET_CATEGORIES, categories })
+    dispatch({ type: actionTypes.RECEIVE_CATEGORIES, categories })
   }
 }
 

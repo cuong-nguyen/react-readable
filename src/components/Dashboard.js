@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  Post,
-  Filter,
-  SortBy,
-  ManagePost,
-  CategoryList,
-  NewCategory,
-} from '../components'
+import { Post, Filter, SortBy, ManagePost, CategoryList, NewCategory } from '../components'
 import { sortPost, addPost, editPost } from '../actions'
 import { getSortedPosts } from '../selectors/postSelectors'
+import { getCategories } from '../selectors/categorySelectors'
 import { SORT_BY_VOTES, SORT_BY_DATE, FILTER_TYPE } from '../constants'
 import Modal from 'react-modal'
 import { v4 } from 'node-uuid'
@@ -70,16 +64,8 @@ class Dashboard extends Component {
         <div className="column">
           {posts.length > 1 && (
             <Filter type={FILTER_TYPE.POST}>
-              <SortBy
-                text="Votes"
-                onClick={() => sortPost(SORT_BY_VOTES)}
-                field={SORT_BY_VOTES}
-              />
-              <SortBy
-                text="Date"
-                onClick={() => sortPost(SORT_BY_DATE)}
-                field={SORT_BY_DATE}
-              />
+              <SortBy text="Votes" onClick={() => sortPost(SORT_BY_VOTES)} field={SORT_BY_VOTES} />
+              <SortBy text="Date" onClick={() => sortPost(SORT_BY_DATE)} field={SORT_BY_DATE} />
             </Filter>
           )}
 
@@ -102,10 +88,7 @@ class Dashboard extends Component {
           overlayClassName="post-overlay"
           onRequestClose={this.closeManagePostModal}
         >
-          <ManagePost
-            post={this.editingPost}
-            onSubmit={this.handleSubmitPost}
-          />
+          <ManagePost post={this.editingPost} onSubmit={this.handleSubmitPost} />
         </Modal>
       </div>
     )
@@ -114,7 +97,7 @@ class Dashboard extends Component {
 
 export default connect(
   state => ({
-    categories: state.categories,
+    categories: getCategories(state),
     posts: getSortedPosts(state),
     filter: state.filter,
   }),
